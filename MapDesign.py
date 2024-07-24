@@ -5,7 +5,7 @@ import tkinter.messagebox as messagebox
 import xml.etree.ElementTree as ET
 from tkinter import simpledialog
 from tkinter import ttk
-from XMLDataExtract import directory_path, LevelsArray
+from XMLDataExtract import directory_path, count_level_subfolders
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -88,6 +88,34 @@ def create_new_xml_folder(building_map, floor):
                 print(f"XML file for room {room_number} does not exist: {xml_path}")
 
 
+def create_edited_building_subfolders(directory_path = "Athabasca2DMapping/Buildings Data"):
+    # Define the subfolders to be created
+    subfolders = [
+        "Augustana Campus",
+        "Calgary Centre",
+        "Campus Saint-Jean",
+        "Enterprise Square",
+        "North Campus",
+        "South Campus"
+    ]
+
+    # Create the "Edited Building" subfolder if it doesn't exist
+    edited_building_path = os.path.join(directory_path, "Edited Building")
+    if not os.path.exists(edited_building_path):
+        os.makedirs(edited_building_path)
+        # print(f"Created: {edited_building_path}")
+    # else:
+        # print(f"Already exists: {edited_building_path}")
+
+    # Create each specified subfolder within "Edited Building" if it doesn't exist
+    for subfolder in subfolders:
+        subfolder_path = os.path.join(edited_building_path, subfolder)
+        if not os.path.exists(subfolder_path):
+            os.makedirs(subfolder_path)
+            # print(f"Created: {subfolder_path}")
+        # else:
+            # print(f"Already exists: {subfolder_path}")
+
 def draw_points(PointArray, category_names, title, onclick_callback, selected_polygons, floor):
     colors = ['red', 'blue', 'green', 'orange', 'black', 'grey', 'yellow', 'pink', 'violet']  # Define colors for each set
 
@@ -119,7 +147,8 @@ def draw_points(PointArray, category_names, title, onclick_callback, selected_po
 
 
     # Pass the floor to create_xml_backup_folder
-    create_new_xml_folder(BuildingMap, floor)
+    # create_new_xml_folder(BuildingMap, floor)
+    create_edited_building_subfolders(directory_path="Buildings Data")
 
     # Highlight selected polygons
     for selected_polygon in selected_polygons:
@@ -147,7 +176,12 @@ class CustomDialog(simpledialog.Dialog):
         self.result = self.entry.get()
 
 class Application(tk.Tk):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, building, campus, *args, **kwargs):
+
+        # Store parameters
+        self.building = building
+        self.campus = campus
+
         self.selected_polygons = []
         self.original_colors = {}
         self.current_floor = None  # Initialize current floor as None
@@ -173,7 +207,7 @@ class Application(tk.Tk):
         self.container.grid_columnconfigure(1, weight=0)  # Optional: Add weight to the logo column
 
         # Add a welcome message
-        self.welcome_label = tk.Label(self.container, text="Welcome to UofA " + BuildingName + " Architecture UI",
+        self.welcome_label = tk.Label(self.container, text="Welcome to UofA " + building + " Architecture UI",
                                       font=("Helvetica", 24, "bold"), anchor="center")
         self.welcome_label.grid(row=0, column=0, columnspan=2, pady=20, sticky="nsew")  # Centered at the top
 
@@ -182,7 +216,8 @@ class Application(tk.Tk):
         button_frame.grid(row=1, column=0, pady=20, sticky="nsew")  # Positioned below the welcome label
 
         # Add buttons for each floor
-        floors = LevelsArray
+        floors = count_level_subfolders(directory_path, campus, building, "interior")
+
         if not floors:  # Check if levels is empty
             # Create and display 'No data found' label
             self.no_data_label = tk.Label(self.container, text="No data found", font=("Helvetica", 18, "italic"), fg="red")
@@ -191,7 +226,7 @@ class Application(tk.Tk):
         else:
             self.no_data_label = None  # Initialize to None if data is found
             for floor in floors:
-                button = ttk.Button(button_frame, text=f"Floor {floor}", command=lambda f=floor: self.plot_floor_map(f))
+                button = ttk.Button(button_frame, text=f"Floor {floor}", command=lambda f=floor: self.plot_floor_map(f, building, campus))
                 button.pack(side=tk.LEFT, padx=(10, 5))  # Add padding between buttons
 
         # Create the canvas holder frame
@@ -239,7 +274,7 @@ class Application(tk.Tk):
         else:
             print(f"No 'X' folder found for floor {current_floor}.")
 
-    def plot_floor_map(self, floor):
+    def plot_floor_map(self, floor, building, campus):
         self.current_floor = floor  # Set the current floor
         self.check_errors_button.grid()  # Make the button visible
 
@@ -251,7 +286,7 @@ class Application(tk.Tk):
             widget.destroy()
 
         # Fetch and categorize coordinate map for the floor
-        points_categories, category_names, title = self.get_floor_data(floor)
+        points_categories, category_names, title = self.get_floor_data(floor, building, campus)
 
         # Create the figure
         fig = draw_points(points_categories, category_names, title, self.checkFunction, self.selected_polygons, floor)
@@ -287,14 +322,13 @@ class Application(tk.Tk):
                          color='white',
                          bbox=dict(facecolor='black', alpha=0.7, edgecolor='none', boxstyle='round,pad=0.3'))
 
-    def get_floor_data(self, floor):
+    def get_floor_data(self, floor, building, campus):
         import XMLDataExtract
 
         def fetchCoordinateMap(floorNumber):
-            print(XMLDataExtract.main(floorNumber=floorNumber))
-            return XMLDataExtract.main(floorNumber=floorNumber)
+            return XMLDataExtract.main(floorNumber, building, campus)
 
-        def categorizesCoordinateMap(floorNumber: int):
+        def categorizesCoordinateMap(floorNumber):
             CoordinateMap = fetchCoordinateMap(floorNumber)
             return [CoordinateMap[key] for key in CoordinateMap], [str(key) for key in CoordinateMap]
 
