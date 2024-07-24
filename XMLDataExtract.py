@@ -1,62 +1,32 @@
 import os
 import xml.etree.ElementTree as ET
 
-# directory_path = "C:/Users/kunaa/Downloads/Athabasca Hall/Athabasca Hall/"
+# directory_path = "C:/Users/kunaa/Downloads/Athabasca Hall/Athabasca Hall"
 directory_path = "C:/Users/kunaa/Downloads/Buildings/Buildings/North Campus/Cameron Library"
 
 filesArray = []
 Data = []
 
+import os
 
-# {Type: Room, Level: 1, RoomNumber: 101, CentralPoint: 34}
 
-def fetch_XML_file_paths(directory):
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            filepath = os.path.join(root, file).replace('\\', '/')
-            if filepath.split('/')[-1] == 'xml':
-                filesArray.append(filepath)
+def fetch_XML_file_paths(directory, floor):
+    filesArray = []
+    interior_path = os.path.join(directory, 'interior').replace('\\', '/')
+    level_folder = f'Level {floor}'
+
+    for root, dirs, files in os.walk(interior_path):
+        for dir_name in dirs:
+            if dir_name == level_folder:
+                level_path = os.path.join(root, dir_name).replace('\\', '/')
+                for level_root, level_dirs, level_files in os.walk(level_path):
+                    for file in level_files:
+                        filepath = os.path.join(level_root, file).replace('\\', '/')
+                        if filepath.endswith("xml"):
+                            filesArray.append(filepath)
+                return filesArray
+    print(filesArray)
     return filesArray
-
-
-def polygon_centroid(vertices):
-    if vertices is not None:
-        # Number of vertices
-        n = len(vertices)
-
-        # Initialize variables to store area and centroid coordinates
-        area = 0
-        centroid_x = 0
-        centroid_y = 0
-
-        # Iterate over each pair of vertices
-        for i in range(n):
-            # Current vertex
-            current_vertex = vertices[i]
-
-            # Next vertex (if current vertex is the last one, wrap around to the first vertex)
-            next_vertex = vertices[(i + 1) % n]
-
-            # Compute the cross-product of current and next vertex coordinates
-            cross_product = (current_vertex[0] * next_vertex[1]) - (next_vertex[0] * current_vertex[1])
-
-            # Update the area
-            area += cross_product
-
-            # Update centroid coordinates
-            centroid_x += (current_vertex[0] + next_vertex[0]) * cross_product
-            centroid_y += (current_vertex[1] + next_vertex[1]) * cross_product
-
-        # Check if area is zero
-        if area == 0:
-            return None  # Handle degenerate polygon
-
-        # Calculate the final area and centroid coordinates
-        area /= 2.0
-        centroid_x /= (6 * area)
-        centroid_y /= (6 * area)
-
-        return round(centroid_x, 5), round(centroid_y, 5)
 
 
 def parse_xml_for_coordinates(xml_file):
@@ -134,17 +104,18 @@ def count_level_subfolders(base_directory, interior_folder):
                             os.path.isdir(os.path.join(interior_path, entry)) and entry.startswith('Level ')]
         print(f"Filtered level subfolders: {level_subfolders}")
 
-        return len(level_subfolders), level_subfolders
+        return level_subfolders
     except Exception as e:
         print(f"An error occurred: {e}")
         return 0
 
 
-countLevels, LevelName = count_level_subfolders(directory_path, "interior")
+LevelsArray = count_level_subfolders(directory_path, "interior")
 
 
-def main(floorNumber: int):
-    files = fetch_XML_file_paths(directory_path)
+def main(floorNumber):
+    floorNumber = floorNumber.split()[-1]
+    files = fetch_XML_file_paths(directory_path, floorNumber)
     CoordinatesMap = {}
 
     for file in files:
@@ -153,11 +124,8 @@ def main(floorNumber: int):
 
         if coordinateList is not None:
             coordinateList.insert(0, [RoomNumber.replace('-', ''), file])
-            if int(Level) == floorNumber:
-                if str(parse_xml_for_type(file).strip().split()[0]) in CoordinatesMap:
-                    CoordinatesMap[str(parse_xml_for_type(file).strip().split()[0])].append(coordinateList)
-                else:
-                    CoordinatesMap[str(parse_xml_for_type(file).strip().split()[0])] = list()
-    return CoordinatesMap
+            if str(parse_xml_for_type(file).strip().split()[0]) not in CoordinatesMap:
+                CoordinatesMap[str(parse_xml_for_type(file).strip().split()[0])] = list()
+            CoordinatesMap[str(parse_xml_for_type(file).strip().split()[0])].append(coordinateList)
 
-# main(1)
+    return CoordinatesMap
