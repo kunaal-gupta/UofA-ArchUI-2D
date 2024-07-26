@@ -2,7 +2,9 @@ import os
 import xml.etree.ElementTree as ET
 
 # path = "Buildings Data/Buildings/"
-directory_path = "Buildings Data/Buildings/"
+Original_Building_Path = "Buildings Data/Buildings/"
+Edited_Building_Path = "Buildings Data/Edited Building/"
+
 
 filesArray = []
 Data = []
@@ -28,22 +30,16 @@ def fetch_XML_file_paths(directory, floor):
 
 
 def parse_xml_for_coordinates(xml_file):
-    # Parse the XML file
     tree = ET.parse(xml_file)
     root = tree.getroot()
 
-    # Find the 'coordinate list' field
     coordinate_list_field = root.find(".//field[@key='coordinate list']")
     coordinate_output_list = []
 
     if coordinate_list_field is not None:
-        # Extract the content of the 'coordinate list' field
         coordinate_list = coordinate_list_field.find('content').text
 
-        # Split the coordinate list by '|'
         coordinates = coordinate_list.split('|')
-
-        # Extract x and z coordinates for each point
 
         for coord in coordinates:
             x, _, z = coord.split(',')
@@ -77,10 +73,8 @@ def parse_xml_for_type(xml_file):
     tree = ET.parse(xml_file)
     root = tree.getroot()
 
-    # Find the field element with key='name'
     field = root.find(".//field[@key='name']/content")
 
-    # Check if the field element exists
     if field is not None:
         try:
             int(parse_xml_for_roomnumber_and_floor(xml_file)[0].split('-')[0])
@@ -96,13 +90,11 @@ def count_level_subfolders(base_directory, building, campus, interior_folder):
     try:
         interior_path = os.path.join(base_directory, interior_folder)
         if not os.path.isdir(interior_path):
-            # print(f"The interior folder '{interior_folder}' does not exist in '{base_directory}'.")
             return 0
 
         entries = os.listdir(interior_path)
         level_subfolders = [entry for entry in entries if
                             os.path.isdir(os.path.join(interior_path, entry)) and entry.startswith('Level ')]
-        # print(f"Filtered level subfolders: {level_subfolders}")
 
         return level_subfolders
     except Exception as e:
@@ -114,7 +106,7 @@ def count_level_subfolders(base_directory, building, campus, interior_folder):
 
 def main(floorNumber, building, campus):
     global path
-    path = directory_path + campus + '/' + building
+    path = Original_Building_Path + campus + '/' + building
 
     floorNumber = floorNumber.split()[-1]
     files = fetch_XML_file_paths(path, floorNumber)
