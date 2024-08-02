@@ -1,0 +1,350 @@
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-100, Centroid: (528.48529, 397.27752)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-137, Centroid: (393.0638, 361.64713)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-141, Centroid: (338.36061, 361.64713)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-146 to 1-168, Centroid: (282.17257, 406.45539)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-202, Centroid: (269.53201, 187.90901)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-203, Centroid: (157.80419, 182.21538)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-218, Centroid: (275.84967, 106.85751)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-225, Centroid: (369.89318, 37.20575)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-310, Centroid: (300.67544, -246.48334)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-316, Centroid: (348.57524, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-318, Centroid: (374.49921, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-320, Centroid: (399.43155, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-330, Centroid: (452.55445, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-332, Centroid: (477.4868, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-342, Centroid: (523.24815, -288.01869)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-435, Centroid: (162.20431, -248.13247)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-488, Centroid: (-376.52463, -81.37325)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-501, Centroid: (40.52892, -45.37866)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-612, Centroid: (62.4784, 308.81814)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-619, Centroid: (0.61683, 254.75124)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-620, Centroid: (-5.73709, 334.2009)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-630, Centroid: (-51.527, 332.06405)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-634, Centroid: (-116.74137, 276.70575)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-650, Centroid: (147.72317, 332.06405)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-655, Centroid: (58.5798, 367.34861)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-662, Centroid: (147.72317, 425.40066)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-669, Centroid: (28.56899, 367.34861)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-670, Centroid: (-8.6363, 427.17625)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-674, Centroid: (-61.85994, 408.29396)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-675, Centroid: (-116.74137, 355.59264)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-702, Centroid: (-92.7868, 420.78668)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-706, Centroid: (-107.04215, 442.88666)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-712, Centroid: (-136.64659, 444.04638)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: 1-713, Centroid: (-149.55788, 403.5892)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Building Outline, Centroid: (-9.64304, -14.40391)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Clare Drake Arena, Centroid: (-373.09021, 431.84415)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Customer Service, Centroid: (250.64882, 37.20575)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Entrance, Centroid: (442.51525, 344.65919)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Entrance, Centroid: (440.85553, 456.0985)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Entrance, Centroid: (-337.94503, -57.67931)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Entrance, Centroid: (-158.37281, 256.96628)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Entrance, Centroid: (-576.31392, 554.50685)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: East Gym, Centroid: (417.655, 148.81086)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: East Pool, Centroid: (332.10348, -147.16922)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Elevator, Centroid: (273.13043, -361.80982)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Elevator, Centroid: (440.31261, 385.20401)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Elevator, Centroid: (127.31023, -143.74836)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Elevator, Centroid: (-56.18531, 238.76825)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Elevator, Centroid: (315.55507, 28.96795)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Elevator, Centroid: (267.02142, 279.95041)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Facility Services, Centroid: (157.80419, 4.40849)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Hallway, Centroid: (46.07495, 125.56263)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Hallway, Centroid: (-570.20725, 457.34673)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Hallway, Centroid: (425.92412, 382.82486)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Hallway, Centroid: (120.38396, 255.25129)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Hanson Fitness & Lifestyle Centre, Centroid: (382.2596, -338.07528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Men's Locker Rooms, Centroid: (20.82811, 104.63825)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (216.08266, 440.34333)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (357.18524, -331.40335)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (267.02142, 264.48166)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (101.7333, -200.85686)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (554.6032, -403.06265)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (-552.60753, 554.84652)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (475.58939, 36.76825)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (165.37493, -45.37866)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (76.91578, 475.30239)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (292.42493, 36.44232)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (-166.69113, 555.19379)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (245.90538, 360.33416)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (-356.36144, -129.48927)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (173.68444, 227.4245)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (-166.69113, 307.95132)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (271.41149, -428.7994)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (-552.60753, 310.42837)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (498.22818, -422.91799)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (32.08558, 254.75124)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Stairs, Centroid: (440.27075, 432.00676)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Steadward Centre, Centroid: (-178.95595, 189.70721)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Universiade Pavilion, Centroid: (-229.4861, -336.78616)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washroom Men, Centroid: (-204.6548, 554.84651)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washroom Men, Centroid: (458.80291, 357.1968)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washroom Men, Centroid: (141.20444, -109.11439)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washrooms, Centroid: (337.23693, 50.85257)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washrooms, Centroid: (62.82756, 411.68295)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washroom Women, Centroid: (-38.10147, 229.79397)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washroom Women, Centroid: (473.95638, 357.1968)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washroom Women, Centroid: (-204.35315, 310.42837)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Washroom Women, Centroid: (108.3494, -118.5644)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: West Pool, Centroid: (-214.12885, 36.42917)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Wilson Climbing Centre, Centroid: (503.23595, -433.71196)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: Women's Locker Rooms, Centroid: (400.79025, -70.8263)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-92.97487, -57.16424)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (324.38158, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-383.21918, 554.84652)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (427.19712, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-116.74137, 308.45309)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (574.34251, -384.57532)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (274.24257, -315.41443)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-225.67939, -107.10878)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (373.77653, 420.72357)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (7.95211, 290.37146)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-25.39761, -106.97021)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (74.45783, 489.33411)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (455.32914, -415.1277)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (510.51132, -84.97477)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-33.04561, -10.44857)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (306.79203, -325.0805)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (182.35893, -141.52305)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (150.48095, 274.7588)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (39.79528, 326.05436)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-143.09155, 391.43496)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (497.97277, -248.013)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (399.27689, -101.20778)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-382.91752, 310.42837)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (-451.58876, -101.61303)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (514.52914, 76.92975)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (157.80419, 86.51187)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (519.26672, -343.59323)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: X, Centroid: (192.16067, 425.40066)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 1, Room: None, Centroid: None}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-130, Centroid: (318.21398, 425.98894)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-131, Centroid: (355.49771, 366.40884)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-153, Centroid: (282.85891, 377.1502)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-155, Centroid: (285.14041, 355.40879)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-210, Centroid: (290.85559, 172.62914)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-215, Centroid: (306.22839, -28.463)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-227, Centroid: (415.41961, 27.1319)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-235, Centroid: (515.15941, 27.83532)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-240, Centroid: (126.69179, -247.56886)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-649, Centroid: (-104.16318, 130.70261)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-650, Centroid: (148.04643, 326.76263)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-653, Centroid: (30.64378, 337.31583)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-662, Centroid: (131.4379, 416.13119)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-670, Centroid: (-28.03321, 422.05562)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-675, Centroid: (-118.7599, 349.77352)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: 2-676, Centroid: (-101.57764, 406.23543)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Building Outline, Centroid: (-13.48005, -15.42829)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Clare Drake Arena, Centroid: (-374.9783, 427.76411)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Council Chamber, Centroid: (525.51391, 397.05435)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Courts, Centroid: (413.05145, -112.26014)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Courts, Centroid: (510.33639, -105.33446)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Entrance, Centroid: (291.80524, 259.45331)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Entrance, Centroid: (202.42854, -98.78232)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Entrance, Centroid: (532.14899, 86.69829)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Entrance, Centroid: (592.99129, -394.04301)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Entrance, Centroid: (440.85859, 459.48986)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Entrance, Centroid: (204.63754, 517.09976)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Elevator, Centroid: (-60.81613, 241.8086)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Elevator, Centroid: (314.30442, 20.22565)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Elevator, Centroid: (121.01914, -146.51076)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Elevator, Centroid: (263.82872, 274.19829)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Elevator, Centroid: (272.6642, -348.39794)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Elevator, Centroid: (446.39284, 381.72821)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Hallway, Centroid: (65.83089, 76.06706)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Hallway, Centroid: (563.98894, -392.15325)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Hallway, Centroid: (-76.92567, 30.86807)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Hanson Fitness & Lifestyle Centre, Centroid: (392.15177, -336.37419)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Hole, Centroid: (424.02546, 149.76079)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Hole, Centroid: (212.93506, 390.81819)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Hole, Centroid: (334.66933, -153.39856)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Main Gym, Centroid: (63.76096, 86.03867)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Sports Hall of Fame, Centroid: (281.75055, 122.55824)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (101.75697, 249.0586)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (-176.20104, 302.80395)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (479.24107, 29.01108)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (99.1568, -204.46167)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (555.16508, -412.00597)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (10.0559, 249.0586)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (498.56633, -431.84463)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (-198.45196, -79.31875)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (171.93992, 228.2278)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (357.08162, -337.75914)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (288.77046, 29.5069)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (245.5558, 358.72229)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (215.17143, 435.96384)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (168.13765, -53.54968)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (81.43016, 469.19074)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (-559.94249, 552.35325)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (440.41482, 433.76293)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (-176.42725, 550.41495)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (-559.90441, 302.80395)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (-147.2047, 393.12775)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Stairs, Centroid: (275.44202, 258.68451)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Universiade Pavilion, Centroid: (-231.43804, -354.30032)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Washroom Men, Centroid: (94.79643, 291.05654)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Washroom Men, Centroid: (347.73605, 27.1319)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Washroom Men, Centroid: (431.51931, 353.43409)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Washroom Women, Centroid: (368.11178, 27.1319)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Washroom Women, Centroid: (456.19995, 357.79336)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Washroom Women, Centroid: (94.79643, 314.40029)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: West Pool, Centroid: (-198.50736, 29.31933)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: Wilson Climbing Centre, Centroid: (489.94804, -439.71261)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-268.8514, 552.35325)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (129.56984, 498.23622)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (17.56438, -79.40914)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-572.70213, 403.24467)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-363.67785, 302.80395)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-194.12501, 191.07181)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-457.30814, 552.35325)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-136.43456, -80.10411)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (552.09578, 318.11908)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-497.04534, -99.96212)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (269.87622, 96.38579)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (97.54643, 350.10638)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-43.87785, 320.2368)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (-291.46406, -80.09559)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: X, Centroid: (307.41403, -328.35728)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 2, Room: None, Centroid: None}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 2-710, Centroid: (-170.84848, 390.18997)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-100, Centroid: (524.43269, 392.0265)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-131, Centroid: (394.191, 357.11558)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-134, Centroid: (339.90469, 425.91686)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-139, Centroid: (340.44065, 364.93669)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-149, Centroid: (284.95206, 361.19923)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-156, Centroid: (248.42679, 426.56395)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-205, Centroid: (165.22504, 163.95412)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-209, Centroid: (165.50482, 29.02481)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-218, Centroid: (312.59891, 72.24899)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-219, Centroid: (350.40785, 31.50619)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-413, Centroid: (168.69816, -143.1046)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-415, Centroid: (168.69816, -160.32653)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-417, Centroid: (168.69816, -176.41915)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-418, Centroid: (132.70143, -179.34464)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-419, Centroid: (171.83792, -195.91769)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-421, Centroid: (171.83792, -218.30835)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-423, Centroid: (171.83792, -239.92977)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-425, Centroid: (171.83792, -261.15352)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-427, Centroid: (172.9502, -282.0642)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-429, Centroid: (171.83792, -304.79059)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-436, Centroid: (103.95019, -284.17552)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-438, Centroid: (103.95019, -263.2233)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-440, Centroid: (103.95019, -239.69639)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-442, Centroid: (103.95019, -217.83912)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-443, Centroid: (136.8719, -217.86162)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-444, Centroid: (103.95019, -195.90597)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-445, Centroid: (136.8719, -200.12227)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-446, Centroid: (103.95019, -174.50407)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: 3-448, Centroid: (102.45384, -149.20095)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Building Outline, Centroid: (-11.29636, -11.61637)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Elevator, Centroid: (445.633, 380.66247)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Elevator, Centroid: (124.3664, -144.1221)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Elevator, Centroid: (316.71534, 23.5429)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hallway, Centroid: (244.17688, 30.48652)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (-87.84114, 235.4069)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (40.7733, 90.33312)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (117.79484, -107.62954)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (206.09732, 386.25377)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (465.04376, 69.86058)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (384.02076, -335.69396)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (238.60921, -192.18467)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (-225.28103, -321.74198)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (223.46705, 152.5597)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (-373.82555, 429.29445)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (489.51208, -437.86499)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Hole, Centroid: (382.93373, 150.5369)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (278.15226, 260.2536)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (108.74291, 250.2325)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (-170.84848, 309.65872)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (288.29316, 31.50619)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (243.26981, 29.36551)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (439.256, 434.98122)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (248.23352, 358.18465)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (475.58548, 31.50619)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Stairs, Centroid: (147.04393, -303.87827)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Washroom Men, Centroid: (125.64788, -305.59249)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Washroom Men, Centroid: (430.70443, 352.50389)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Washroom Women, Centroid: (454.94469, 357.39066)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: Washroom Women, Centroid: (102.50428, -305.71653)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (357.94077, -99.70638)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (242.78212, 387.7113)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (504.06712, -99.89615)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (136.8719, -256.61733)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (391.59349, 380.13427)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (265.88605, 275.18739)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (355.04768, 72.24899)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (135.2268, -288.24792)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (-211.14984, -77.86108)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (269.83296, 72.24899)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: X, Centroid: (43.25209, 302.83837)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 3, Room: None, Centroid: None}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-206, Centroid: (257.81468, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-208, Centroid: (292.65195, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-212, Centroid: (320.28449, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-216, Centroid: (351.30591, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-218, Centroid: (373.89854, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-220, Centroid: (392.7547, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-222, Centroid: (410.33792, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-224, Centroid: (426.93481, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-226, Centroid: (442.2847, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-228, Centroid: (456.96991, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-230, Centroid: (472.90213, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-232, Centroid: (488.10871, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-233, Centroid: (503.33291, 29.67493)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-234, Centroid: (503.31528, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-236, Centroid: (518.86176, 74.86528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-240, Centroid: (545.26529, 59.40371)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-242, Centroid: (545.26529, 20.90934)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-275, Centroid: (328.40865, -90.51796)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-279, Centroid: (301.79916, -90.51796)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-280, Centroid: (324.43075, -49.18536)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-291, Centroid: (260.92856, -90.51796)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-405, Centroid: (139.60762, -105.92819)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-406, Centroid: (167.21338, -51.77613)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-407, Centroid: (174.44854, -86.87385)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-409, Centroid: (174.44854, -105.02642)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-411, Centroid: (174.44854, -125.18227)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-413, Centroid: (174.44854, -145.90761)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-414, Centroid: (105.19884, -152.69821)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-415, Centroid: (174.44854, -167.62029)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-416, Centroid: (124.8636, -225.74844)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-417, Centroid: (174.44854, -189.3022)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-419, Centroid: (174.44854, -210.68505)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-421, Centroid: (174.44854, -232.36697)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-423, Centroid: (174.44854, -254.34794)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-425, Centroid: (174.77715, -275.19971)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-427, Centroid: (175.06801, -301.87088)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-464, Centroid: (-104.3703, -72.139)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-468, Centroid: (-133.28376, -75.82158)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-470, Centroid: (-166.24872, -78.80161)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-472, Centroid: (-199.06739, -75.82158)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-478, Centroid: (-249.8013, -75.82158)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: 4-490, Centroid: (-517.48155, -76.68044)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Building Outline, Centroid: (-5.02888, -17.52598)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Elevator, Centroid: (319.337, 24.8899)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Elevator, Centroid: (133.65958, -146.05079)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Hallway, Centroid: (375.62112, -70.87321)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Hallway, Centroid: (92.38145, -64.30439)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Hallway, Centroid: (-201.85887, -66.62979)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Hallway, Centroid: (450.12367, -62.93194)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Hole, Centroid: (425.99901, -292.52312)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Hole, Centroid: (-25.71715, 263.42801)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Stairs, Centroid: (150.12655, -304.00061)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Stairs, Centroid: (289.88488, 33.02796)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Stairs, Centroid: (130.61922, -72.43974)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Stairs, Centroid: (480.13048, 31.66637)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Universiade Pavilion, Centroid: (-224.76973, -318.76344)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Washroom Men, Centroid: (338.43888, 33.0916)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Washroom Men, Centroid: (127.42796, -304.45833)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Washroom Women, Centroid: (106.54051, -299.05367)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: Washroom Women, Centroid: (330.78263, 5.62021)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (116.4669, -115.91263)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (-60.04614, -72.139)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (252.85904, -280.29921)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (389.73731, -7.87568)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (-282.10193, -72.139)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (-228.6489, -75.82158)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (489.6676, -68.11189)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (481.78173, -19.6776)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: X, Centroid: (263.17439, -6.64528)}
+{Building: Wilson Climbing Centre, Campus: North Campus, Floor: Level 4, Room: None, Centroid: None}

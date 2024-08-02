@@ -20,11 +20,14 @@ def get_campus_and_building():
 
 if __name__ == '__main__':
     campus, building = get_campus_and_building()
-    print(f'Fetching {building} data from {campus} campus...')
+    print(f'Selected {building} in {campus}'+ '\n')
+    print(f'Fetching {building} data....')
+    # building = 'Athabasca Hall'
+    # campus = 'North Campus'
 
 
     if campus and building:
-        print("Building User interface.....")
+        print("Building User interface....." + "\n")
 
         app = MapDesign.Application(building, campus)
         app.mainloop()
