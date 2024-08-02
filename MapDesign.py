@@ -41,21 +41,20 @@ def create_edited_building_subfolders(directory_path = "Athabasca2DMapping/Build
             # print(f"Already exists: {subfolder_path}")
 
 def draw_points(PointArray, category_names, title, onclick_callback, selected_polygons, floor):
-    colors = ['red', 'blue', 'green', 'orange', 'black', 'grey', 'yellow', 'pink', 'violet']  # Define colors for each set
+    colors = ['red', 'blue', 'green', 'orange', 'black', 'grey', 'yellow', 'pink', 'violet']
 
-    fig, ax = plt.subplots(figsize=(10, 8))  # Adjust the figure size here
+    fig, ax = plt.subplots(figsize=(10, 8))
 
     polygons = []
     for i, points_category in enumerate(PointArray):
         color = colors[i % len(colors)]
         category_polygons = []
         for points in points_category:
-            room_number = points[0][0]  # Get the room number
+            room_number = points[0][0]
             room_file_path = points[0][1]
 
             if room_number is not None:
                 if room_number in BuildingMap:
-                    # Initialize as a list if it's not already
                     if BuildingMap[room_number] is None:
                         BuildingMap[room_number] = []
                     BuildingMap[room_number].append(room_file_path)
@@ -70,11 +69,8 @@ def draw_points(PointArray, category_names, title, onclick_callback, selected_po
         polygons.append(category_polygons)
 
 
-    # Pass the floor to create_xml_backup_folder
-    # create_new_xml_folder(BuildingMap, floor)
     create_edited_building_subfolders(directory_path="Buildings Data")
 
-    # Highlight selected polygons
     for selected_polygon in selected_polygons:
         selected_polygon.set_edgecolor('gray')
         selected_polygon.set_facecolor('gray')
@@ -93,7 +89,7 @@ class CustomDialog(simpledialog.Dialog):
 
     def body(self, master):
         tk.Label(master, text=f"Enter new name for Room: {self.room_name}").pack(pady=5)
-        self.entry = tk.Entry(master, width=30)  # Wider entry
+        self.entry = tk.Entry(master, width=30)
         self.entry.pack(pady=5)
 
     def apply(self):
@@ -102,135 +98,96 @@ class CustomDialog(simpledialog.Dialog):
 class Application(tk.Tk):
     def __init__(self, building, campus, *args, **kwargs):
 
-        # Store parameters
         self.building = building
         self.campus = campus
         self.originalXMLfolderPath = f"Buildings Data/Buildings/{self.campus}/{self.building}"
         self.editedXMLfolderPath = f"Buildings Data/Edited Building/{self.campus}/{self.building}"
-
-
         self.selected_polygons = []
         self.original_colors = {}
-        self.current_floor = None  # Initialize current floor as None
-
+        self.current_floor = None
         super().__init__(*args, **kwargs)
         self.title("UofA Building 2D UI")
         self.geometry("1200x900")
         self.resizable(True, True)
-
-        # Configure row and column weights
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
-
-        # Create a container
         self.container = ttk.Frame(self)
         self.container.grid(padx=10, pady=10, sticky="nsew")
-
-        # Configure row and column weights of the container
-        self.container.grid_rowconfigure(0, weight=0)  # Row for welcome label
-        self.container.grid_rowconfigure(1, weight=0)  # Row for button frame
-        self.container.grid_rowconfigure(2, weight=1)  # Row for canvas
+        self.container.grid_rowconfigure(0, weight=0)
+        self.container.grid_rowconfigure(1, weight=0)
+        self.container.grid_rowconfigure(2, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
-        self.container.grid_columnconfigure(1, weight=0)  # Optional: Add weight to the logo column
-
-        # Add a welcome message
+        self.container.grid_columnconfigure(1, weight=0)
         self.welcome_label = tk.Label(self.container, text="Welcome to UofA " + building + " Architecture UI",
                                       font=("Helvetica", 24, "bold"), anchor="center")
-        self.welcome_label.grid(row=0, column=0, columnspan=2, pady=20, sticky="nsew")  # Centered at the top
-
-        # Create button frame
+        self.welcome_label.grid(row=0, column=0, columnspan=2, pady=20, sticky="nsew")
         button_frame = ttk.Frame(self.container)
-        button_frame.grid(row=1, column=0, pady=20, sticky="nsew")  # Positioned below the welcome label
-
-        # Add buttons for each floor
+        button_frame.grid(row=1, column=0, pady=20, sticky="nsew")
         floors = count_level_subfolders(Original_Building_Path, campus, building, "interior")
 
-        if not floors:  # Check if levels is empty
-            # Create and display 'No data found' label
+        if not floors:
             self.no_data_label = tk.Label(self.container, text="No data found", font=("Helvetica", 18, "italic"), fg="red")
-            self.no_data_label.grid(row=1, column=0, pady=20, sticky="nsew")  # Display 'No data found' message
-            button_frame.grid_remove()  # Hide button frame if no data found
+            self.no_data_label.grid(row=1, column=0, pady=20, sticky="nsew")
+            button_frame.grid_remove()
         else:
-            self.no_data_label = None  # Initialize to None if data is found
+            self.no_data_label = None
             for floor in floors:
                 button = ttk.Button(button_frame, text=f"Floor {floor}", command=lambda f=floor: self.plot_floor_map(f, building, campus))
-                button.pack(side=tk.LEFT, padx=(10, 5))  # Add padding between buttons
+                button.pack(side=tk.LEFT, padx=(10, 5))
 
-        # Create the canvas holder frame
         self.canvas_frame = ttk.Frame(self.container)
-        self.canvas_frame.grid(row=2, column=0, sticky="nsew")  # Canvas expands to fill available space
+        self.canvas_frame.grid(row=2, column=0, sticky="nsew")
 
-        # Adding a button to quit the application
         quit_button = ttk.Button(self.container, text="Quit", command=self.quit)
-        quit_button.grid(row=3, column=0, pady=10, sticky="ew")  # Positioned below the canvas
+        quit_button.grid(row=3, column=0, pady=10, sticky="ew")
 
-        # Create CheckRoomNameErrors button, initially hidden
         self.check_errors_button = ttk.Button(self.container, text="Check Room Name Errors",
                                               command=self.check_room_name_errors)
         self.check_errors_button.grid(row=1, column=1, pady=10, padx=(0, 10),
-                                      sticky='ne')  # Positioned to the right of the button frame
-        self.check_errors_button.grid_remove()  # Hide the button initially
-
-        # Placeholder for selected rooms for door addition
+                                      sticky='ne')
+        self.check_errors_button.grid_remove()
         self.selected_rooms = []
 
     def check_room_name_errors(self):
-        # Logic to check room name errors
         print("Checking for irregular room name.....")
-
-        # Define the project directory and the path to the new XML folder
-        project_directory = os.path.dirname(os.path.abspath(__file__))  # Current script's directory
+        project_directory = os.path.dirname(os.path.abspath(__file__))
         backup_folder_path = os.path.join(project_directory, "new_xml")
 
-        # Get the current floor
-        current_floor = self.get_current_floor()  # You may need to implement this method
+        current_floor = self.get_current_floor()
         level_folder_path = os.path.join(backup_folder_path, f"Level_{current_floor}")
 
-        # Path to the "X" folder
         x_folder_path = os.path.join(level_folder_path, "X")
 
-        # Check if the "X" folder exists
         if os.path.exists(x_folder_path):
-            # Iterate through each XML file in the "X" folder
             for xml_file in os.listdir(x_folder_path):
                 if xml_file.endswith(".xml"):
-                    room_name = os.path.splitext(xml_file)[0]  # Get the room name without the .xml extension
-                    self.correct_room_name(room_name)  # Call the function to correct the room name
-            # Show completion message after processing all files
+                    room_name = os.path.splitext(xml_file)[0]
+                    self.correct_room_name(room_name)
             messagebox.showinfo("Process Completed", "Checked all files with irregular names.")
         else:
             print(f"No 'X' folder found for floor {current_floor}.")
 
     def plot_floor_map(self, floor, building, campus):
-        self.current_floor = floor  # Set the current floor
-        self.check_errors_button.grid()  # Make the button visible
+        self.current_floor = floor
+        self.check_errors_button.grid()
 
-        # Hide welcome message and logo
-        # self.welcome_label.grid_remove()
-
-        # Clear previous canvas frame widgets
         for widget in self.canvas_frame.winfo_children():
             widget.destroy()
 
-        # Fetch and categorize coordinate map for the floor
         points_categories, category_names, title = self.get_floor_data(floor, building, campus)
 
-        # Create the figure
         fig = draw_points(points_categories, category_names, title, self.checkFunction, self.selected_polygons, floor)
 
-        # Embed the figure in Tkinter
         self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(expand=True, fill="both", padx=10, pady=10)
 
-        # Add room number labels
         for points_category in points_categories:
             for points in points_category:
-                room_number = points[0][0]  # Extract room number
-                room_points = np.array(points[1:])  # Room polygon points
-                centroid = np.mean(room_points, axis=0)  # Calculate centroid
+                room_number = points[0][0]
+                room_points = np.array(points[1:])
+                centroid = np.mean(room_points, axis=0)
 
-                # Replace names with abbreviations
                 if "Washroom Men" in room_number:
                     room_number = "WM"
                 elif "Washroom Women" in room_number:
@@ -244,7 +201,6 @@ class Application(tk.Tk):
                 elif "Hallway" in room_number:
                     room_number = "H"
 
-                # Text label with a background for better readability
                 plt.text(centroid[0], centroid[1], room_number, fontsize=8, ha='center', va='center',
                          color='white',
                          bbox=dict(facecolor='black', alpha=0.7, edgecolor='none', boxstyle='round,pad=0.3'))
@@ -265,9 +221,8 @@ class Application(tk.Tk):
         return points_categories, category_names, title
 
     def get_current_floor(self):
-        return self.current_floor  # Return the currently selected floor
+        return self.current_floor
 
-    # Select Functions --------------------------------------------------
 
     def checkFunction(self, event, polygons, category_names):
         if event.inaxes is not None:
@@ -275,14 +230,13 @@ class Application(tk.Tk):
             for category_index, category_polygons in enumerate(polygons):
                 for polygon, room_number in category_polygons:
                     if polygon.get_path().contains_point((x, y)):
-                        print(f"Room clicked: {room_number}\n")  # Print the room number
+                        print(f"Room clicked: {room_number}\n")
                         self.handleCheck(room_number, (x, y))
 
-                        # Highlight the selected polygon if not already selected
                         if polygon not in self.selected_polygons:
                             self.selected_polygons.append(polygon)
 
-                        self.canvas.draw()  # Refresh the canvas
+                        self.canvas.draw()
                         break
 
     def handleCheck(self, room_name, coordinates):
@@ -294,15 +248,12 @@ class Application(tk.Tk):
         elif action == "add_wall":
             self.add_wall(coordinates)
 
-    # 3 Main Functions --------------------------------------------------------
 
     def add_door(self, room_name):
         self.selected_rooms.append(room_name)
         if len(self.selected_rooms) == 2:
-            # Add door logic here
             room1, room2 = self.selected_rooms
             print(f"Adding door between {room1} and {room2}")
-            # Update XML
             self.update_xml_with_door(room1, room2)
             self.selected_rooms = []
 
@@ -314,13 +265,10 @@ class Application(tk.Tk):
             self.update_xml_with_new_name(room_name, new_name)
 
     def add_wall(self, coordinates):
-        # Logic to add wall here
-        point1, point2 = coordinates  # You will need to select two points
+        point1, point2 = coordinates
         print(f"Adding wall between {point1} and {point2}")
-        # Update XML
         self.update_xml_with_wall(point1, point2)
 
-    # Update XML Functions ---------------------------------------------------
 
     def update_xml_with_door(self, room1, room2):
         pass
@@ -356,7 +304,7 @@ class Application(tk.Tk):
                 f"Original XML file '{XML_Filename}' not found in '{self.originalXMLfolderPath}'.")
 
         edited_folder_path = os.path.join(self.editedXMLfolderPath, self.current_floor, room_name)
-        edited_xml_path = os.path.join(edited_folder_path, XML_Filename)  # Keep original filename for now
+        edited_xml_path = os.path.join(edited_folder_path, XML_Filename)
 
         os.makedirs(edited_folder_path, exist_ok=True)
 

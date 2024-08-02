@@ -30,23 +30,15 @@ def fetch_XML_file_paths(directory, floor):
 
 
 def parse_xml_for_coordinates(xml_file):
-    # Parse the XML file
     tree = ET.parse(xml_file)
     root = tree.getroot()
 
-    # Find the 'coordinate list' field
     coordinate_list_field = root.find(".//field[@key='coordinate list']")
     coordinate_output_list = []
 
     if coordinate_list_field is not None:
-        # Extract the content of the 'coordinate list' field
         coordinate_list = coordinate_list_field.find('content').text
-
-        # Split the coordinate list by '|'
         coordinates = coordinate_list.split('|')
-
-        # Extract x and z coordinates for each point
-
         for coord in coordinates:
             x, _, z = coord.split(',')
             coordinate_output_list.append([float(x), float(z)])
@@ -65,37 +57,22 @@ def parse_floor_number(text):
 
 def polygon_centroid(vertices):
     if vertices is not None:
-        # Number of vertices
         n = len(vertices)
-
-        # Initialize variables to store area and centroid coordinates
         area = 0
         centroid_x = 0
         centroid_y = 0
 
-        # Iterate over each pair of vertices
         for i in range(n):
-            # Current vertex
             current_vertex = vertices[i]
-
-            # Next vertex (if current vertex is the last one, wrap around to the first vertex)
             next_vertex = vertices[(i + 1) % n]
-
-            # Compute the cross-product of current and next vertex coordinates
             cross_product = (current_vertex[0] * next_vertex[1]) - (next_vertex[0] * current_vertex[1])
-
-            # Update the area
             area += cross_product
-
-            # Update centroid coordinates
             centroid_x += (current_vertex[0] + next_vertex[0]) * cross_product
             centroid_y += (current_vertex[1] + next_vertex[1]) * cross_product
 
-        # Check if area is zero
         if area == 0:
-            return None  # Handle degenerate polygon
+            return None
 
-        # Calculate the final area and centroid coordinates
         area /= 2.0
         centroid_x /= (6 * area)
         centroid_y /= (6 * area)
@@ -117,10 +94,8 @@ def parse_xml_for_type(xml_file):
     tree = ET.parse(xml_file)
     root = tree.getroot()
 
-    # Find the field element with key='name'
     field = root.find(".//field[@key='name']/content")
 
-    # Check if the field element exists
     if field is not None:
         try:
             int(parse_xml_for_roomnumber_and_floor(xml_file)[0].split('-')[0])
