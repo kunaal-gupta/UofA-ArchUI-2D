@@ -13,8 +13,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 BuildingMap = {}
 BuildingName = Original_Building_Path.split('/')[-1]
 
+print(Edited_Building_Path)
 
-def create_edited_building_subfolders(directory_path = "Athabasca2DMapping/Buildings Data"):
+
+def create_edited_building_subfolders(directory_path="Athabasca2DMapping/Buildings Data"):
     subfolders = [
         "Augustana Campus",
         "Calgary Centre",
@@ -27,18 +29,18 @@ def create_edited_building_subfolders(directory_path = "Athabasca2DMapping/Build
     edited_building_path = os.path.join(directory_path, "Edited Building")
     if not os.path.exists(edited_building_path):
         os.makedirs(edited_building_path)
-        # print(f"Created: {edited_building_path}")
+    #     print(f"1. Created: {edited_building_path}")
     # else:
-        # print(f"Already exists: {edited_building_path}")
+    #     print(f"1. Already exists: {edited_building_path}")
 
-    # Create each specified subfolder within "Edited Building" if it doesn't exist
     for subfolder in subfolders:
         subfolder_path = os.path.join(edited_building_path, subfolder)
         if not os.path.exists(subfolder_path):
             os.makedirs(subfolder_path)
-            # print(f"Created: {subfolder_path}")
+        #     print(f"2. Created: {subfolder_path}")
         # else:
-            # print(f"Already exists: {subfolder_path}")
+        #     print(f"2. Already exists: {subfolder_path}")
+
 
 def draw_points(PointArray, category_names, title, onclick_callback, selected_polygons, floor):
     colors = ['red', 'blue', 'green', 'orange', 'black', 'grey', 'yellow', 'pink', 'violet']
@@ -62,12 +64,12 @@ def draw_points(PointArray, category_names, title, onclick_callback, selected_po
                     BuildingMap[room_number] = [room_file_path]
 
             points = np.array(points[1:])
-            polygon = plt.Polygon(points, closed=True, fill=True, edgecolor=color, facecolor=color, alpha=0.5, linewidth=3.5)
+            polygon = plt.Polygon(points, closed=True, fill=True, edgecolor=color, facecolor=color, alpha=0.5,
+                                  linewidth=3.5)
             category_polygons.append((polygon, room_number))
             ax.add_patch(polygon)
             plt.plot(points[:, 0], points[:, 1], marker='.', color='black')
         polygons.append(category_polygons)
-
 
     create_edited_building_subfolders(directory_path="Buildings Data")
 
@@ -76,11 +78,13 @@ def draw_points(PointArray, category_names, title, onclick_callback, selected_po
         selected_polygon.set_facecolor('gray')
 
     plt.title(title)
-    legend_handles = [plt.Line2D([0], [0], color=colors[i % len(colors)], linewidth=4.5, label=category_names[i]) for i in range(len(PointArray))]
+    legend_handles = [plt.Line2D([0], [0], color=colors[i % len(colors)], linewidth=4.5, label=category_names[i]) for i
+                      in range(len(PointArray))]
     plt.legend(handles=legend_handles, loc='best')
 
     fig.canvas.mpl_connect('button_press_event', lambda event: onclick_callback(event, polygons, category_names))
     return fig
+
 
 class CustomDialog(simpledialog.Dialog):
     def __init__(self, master, room_name):
@@ -95,9 +99,11 @@ class CustomDialog(simpledialog.Dialog):
     def apply(self):
         self.result = self.entry.get()
 
+
 class Application(tk.Tk):
     def __init__(self, building, campus, *args, **kwargs):
 
+        self.adding_door = False
         self.building = building
         self.campus = campus
         self.originalXMLfolderPath = f"Buildings Data/Buildings/{self.campus}/{self.building}"
@@ -126,13 +132,15 @@ class Application(tk.Tk):
         floors = count_level_subfolders(Original_Building_Path, campus, building, "interior")
 
         if not floors:
-            self.no_data_label = tk.Label(self.container, text="No data found", font=("Helvetica", 18, "italic"), fg="red")
+            self.no_data_label = tk.Label(self.container, text="No data found", font=("Helvetica", 18, "italic"),
+                                          fg="red")
             self.no_data_label.grid(row=1, column=0, pady=20, sticky="nsew")
             button_frame.grid_remove()
         else:
             self.no_data_label = None
             for floor in floors:
-                button = ttk.Button(button_frame, text=f"Floor {floor}", command=lambda f=floor: self.plot_floor_map(f, building, campus))
+                button = ttk.Button(button_frame, text=f"Floor {floor}",
+                                    command=lambda f=floor: self.plot_floor_map(f, building, campus))
                 button.pack(side=tk.LEFT, padx=(10, 5))
 
         self.canvas_frame = ttk.Frame(self.container)
@@ -141,42 +149,30 @@ class Application(tk.Tk):
         quit_button = ttk.Button(self.container, text="Quit", command=self.quit)
         quit_button.grid(row=3, column=0, pady=10, sticky="ew")
 
-        self.check_errors_button = ttk.Button(self.container, text="Check Room Name Errors",
-                                              command=self.check_room_name_errors)
+        self.check_errors_button = ttk.Button(self.container, text="Check Room Name",
+                                              command=self.correct_room_name)
         self.check_errors_button.grid(row=1, column=1, pady=10, padx=(0, 10),
                                       sticky='ne')
         self.check_errors_button.grid_remove()
+
+        self.add_wall_button = ttk.Button(self.container, text="Add Wall Button",
+                                          command=self.add_wall)
+        self.add_wall_button.grid(row=2, column=1, pady=10, padx=(1, 0),
+                                  sticky='ne')
+        self.add_wall_button.grid_remove()
         self.selected_rooms = []
-
-    def check_room_name_errors(self):
-        print("Checking for irregular room name.....")
-        project_directory = os.path.dirname(os.path.abspath(__file__))
-        backup_folder_path = os.path.join(project_directory, "new_xml")
-
-        current_floor = self.get_current_floor()
-        level_folder_path = os.path.join(backup_folder_path, f"Level_{current_floor}")
-
-        x_folder_path = os.path.join(level_folder_path, "X")
-
-        if os.path.exists(x_folder_path):
-            for xml_file in os.listdir(x_folder_path):
-                if xml_file.endswith(".xml"):
-                    room_name = os.path.splitext(xml_file)[0]
-                    self.correct_room_name(room_name)
-            messagebox.showinfo("Process Completed", "Checked all files with irregular names.")
-        else:
-            print(f"No 'X' folder found for floor {current_floor}.")
 
     def plot_floor_map(self, floor, building, campus):
         self.current_floor = floor
         self.check_errors_button.grid()
+        self.add_wall_button.grid()
 
         for widget in self.canvas_frame.winfo_children():
             widget.destroy()
 
         points_categories, category_names, title = self.get_floor_data(floor, building, campus)
 
-        fig = draw_points(points_categories, category_names, title, self.checkFunction, self.selected_polygons, floor)
+        fig = draw_points(points_categories, category_names, title, self.onCanvasClick, self.selected_polygons, floor)
 
         self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
         self.canvas.draw()
@@ -223,31 +219,35 @@ class Application(tk.Tk):
     def get_current_floor(self):
         return self.current_floor
 
-
-    def checkFunction(self, event, polygons, category_names):
+    def onCanvasClick(self, event, polygons, category_names):
         if event.inaxes is not None:
             x, y = event.xdata, event.ydata
+            print(f"Coordinates: ({x}, {y})")
+
             for category_index, category_polygons in enumerate(polygons):
                 for polygon, room_number in category_polygons:
                     if polygon.get_path().contains_point((x, y)):
-                        print(f"Room clicked: {room_number}\n")
-                        self.handleCheck(room_number, (x, y))
+                        if room_number != "Building Outline":
+                            print(f"Room clicked: {room_number}" + "\n")
+                            self.handleClick(room_number, (x, y))
+                            if polygon not in self.selected_polygons:
+                                self.selected_polygons.append(polygon)
+                            self.canvas.draw()
+                            return
 
-                        if polygon not in self.selected_polygons:
-                            self.selected_polygons.append(polygon)
+        print("Event not in axes or no polygon contains the point" + "\n")
 
-                        self.canvas.draw()
-                        break
-
-    def handleCheck(self, room_name, coordinates):
-        action = simpledialog.askstring("Action", "Enter action: add_door, correct_name, or add_wall")
-        if action == "add_door":
-            self.add_door(room_name)
-        elif action == "correct_name":
-            self.correct_room_name(room_name)
-        elif action == "add_wall":
+    def handleClick(self, room_name, coordinates):
+        action = simpledialog.askstring("Action", "Enter action: 1. add_door, 2. add_wall")
+        if action == "1":
+            self.start_add_door(room_name)
+        elif action == "2":
             self.add_wall(coordinates)
 
+    def start_add_door(self, room_name):
+        messagebox.showinfo("Instruction", f"Select the second room for adding a door from {room_name}.")
+        self.selected_rooms.append(room_name)
+        self.adding_door = True
 
     def add_door(self, room_name):
         self.selected_rooms.append(room_name)
@@ -256,79 +256,84 @@ class Application(tk.Tk):
             print(f"Adding door between {room1} and {room2}")
             self.update_xml_with_door(room1, room2)
             self.selected_rooms = []
+            self.adding_door = False
 
-    def correct_room_name(self, room_name):
-        dialog = CustomDialog(self, room_name)
-        new_name = dialog.result
-        if new_name:
-            print(f"Changing Room name: {room_name} to {new_name}\n")
-            self.update_xml_with_new_name(room_name, new_name)
+    def correct_room_name(self):
+        self.update_xml_with_new_name()
 
     def add_wall(self, coordinates):
         point1, point2 = coordinates
         print(f"Adding wall between {point1} and {point2}")
         self.update_xml_with_wall(point1, point2)
 
-
-    def update_xml_with_door(self, room1, room2):
-        pass
-
-
-    def find_xml_file_path(self, root_folder, file_name, room_name):
-        room_path = os.path.join(root_folder, 'Interior', f'{self.current_floor}',room_name)
+    def find_xml_file_path(self, root_folder, file_name='xml', roomname='X'):
+        room_path = os.path.join(root_folder, 'Interior', f'{self.current_floor}', roomname)
         room_path = room_path.replace('/', '\\')
-
         if not os.path.isdir(room_path):
             print('XML Directory does not exist:', room_path)
             return None
 
+        filePathArray = []
         for root, dirs, files in os.walk(room_path):
-
             if file_name in files:
-                file_path = os.path.join(root, file_name).replace('\\', '/')
-                return file_path
+                if file_name == 'xml':
+                    file_path = os.path.join(root, file_name).replace('\\', '/')
+                    filePathArray.append(file_path)
 
-        print('xml File not found.')
-        return None
+        return filePathArray
 
-
-    def update_xml_with_new_name(self, room_name, new_name):
+    def update_xml_with_new_name(self):
         if self.current_floor is None:
             raise ValueError("Current floor is not set.")
-
         XML_Filename = "xml"
-        original_xml_path = self.find_xml_file_path(self.originalXMLfolderPath, XML_Filename, room_name)
+        room_name = 'X'
+        original_xml_path_array = self.find_xml_file_path(self.originalXMLfolderPath, XML_Filename, room_name)
 
-        if original_xml_path is None:
-            raise FileNotFoundError(
-                f"Original XML file '{XML_Filename}' not found in '{self.originalXMLfolderPath}'.")
+        for i in original_xml_path_array:
+            print()
+            if i is None:
+                raise FileNotFoundError(
+                    f"Original XML file '{XML_Filename}' not found in '{self.originalXMLfolderPath}'.")
 
-        edited_folder_path = os.path.join(self.editedXMLfolderPath, self.current_floor, room_name)
-        edited_xml_path = os.path.join(edited_folder_path, XML_Filename)
+            x_position = i.find('X/') + len('X/')
+            xml_file_path = i[x_position:]
 
-        os.makedirs(edited_folder_path, exist_ok=True)
+            temp = i[x_position:]
 
-        if not os.path.isfile(original_xml_path):
-            raise FileNotFoundError(f"The path '{original_xml_path}' is not a file.")
+            edited_folder_path = os.path.join(self.editedXMLfolderPath, self.current_floor, room_name, xml_file_path)
+            edited_xml_path = os.path.join(edited_folder_path, XML_Filename)
 
-        shutil.copy2(original_xml_path, edited_xml_path)
+            os.makedirs(edited_folder_path, exist_ok=True)
 
-        try:
-            tree = ET.parse(edited_xml_path)
-            root = tree.getroot()
+            if not os.path.isfile(i):
+                raise FileNotFoundError(f"The path '{i}' is not a file.")
 
-            if root.tag == 'item':
-                root.set('name', new_name)
-                root.set('key', new_name)
+            shutil.copy2(i, edited_xml_path)
+            print(f'{i} is copied')
 
-                tree.write(edited_xml_path, encoding='utf-8', xml_declaration=True)
-                print(f"The item name and key have been updated successfully in {room_name}.")
-            else:
-                print("The root element is not <item>.")
-        except ET.ParseError as e:
-            print(f"Failed to parse XML file: {e}")
+            root = tk.Tk()
+            root.withdraw()
 
+            dialog = CustomDialog(root, temp)
+            new_name = dialog.result
+
+            try:
+                tree = ET.parse(edited_xml_path)
+                root = tree.getroot()
+
+                if root.tag == 'item':
+                    root.set('name', new_name)
+                    root.set('key', new_name)
+
+                    tree.write(edited_xml_path, encoding='utf-8', xml_declaration=True)
+                    print(f"The item name and key have been updated successfully in {room_name}.")
+                else:
+                    print("The root element is not <item>.")
+            except ET.ParseError as e:
+                print(f"Failed to parse XML file: {e}")
 
     def update_xml_with_wall(self, point1, point2):
         pass
 
+    def update_xml_with_door(self, room1, room2):
+        pass
