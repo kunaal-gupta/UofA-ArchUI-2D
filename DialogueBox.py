@@ -3,7 +3,7 @@ from tkinter import simpledialog, Label, Entry
 class CustomDialog(simpledialog.Dialog):
     def __init__(self, master, room_name, dialog_title="Default Title"):
         self.room_name = room_name
-        self._dialog_title = dialog_title  # Renamed to avoid conflict
+        self._dialog_title = dialog_title
         super().__init__(master, title=self._dialog_title)
 
     def body(self, master):

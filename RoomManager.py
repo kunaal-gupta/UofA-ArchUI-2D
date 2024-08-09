@@ -1,4 +1,6 @@
+import os
 from tkinter import simpledialog, Tk
+
 
 class RoomManager:
     def __init__(self, rooms, campus, building, floor):
@@ -12,20 +14,22 @@ class RoomManager:
         neighbours = Neighbours()
         return neighbours.are_rooms_neighbors(room1, room2)
 
-    from tkinter import simpledialog, Tk
-
     def generating_neighbours(self):
         root = Tk()
-        root.withdraw()  # Hide the root window
+        root.withdraw()
 
-        default_file_name = 'NeighboringRooms.txt'
-        output_file = simpledialog.askstring(
+        default_file_name = 'OutputFiles/NeighboringRooms.txt'
+        os.makedirs(os.path.dirname(default_file_name), exist_ok=True)
+
+        file_name = simpledialog.askstring(
             "File Name",
-            f"Enter file name to store neighboring rooms data. Default filename {default_file_name}:",
-            initialvalue=default_file_name
+            f"Enter file name to store neighboring rooms data. Default filename {os.path.basename(default_file_name)}:",
+            initialvalue=os.path.basename(default_file_name)
         )
-        if not output_file:
-            output_file = default_file_name
+
+        if not file_name:
+            file_name = os.path.basename(default_file_name)
+        output_file = os.path.join(os.path.dirname(default_file_name), file_name)
 
         try:
             with open(output_file, 'a+') as file:
@@ -35,8 +39,7 @@ class RoomManager:
                     print(f'{output_file} file already exists')
                     print(f'Appending neighbouring rooms\' data to {output_file}')
                 else:
-                    print(f'Created {output_file} to store neighboring rooms data')
-                print(f'Processing....\n')
+                    print(f'Created {output_file} to store neighboring rooms data. Processing file...')
 
                 for i in range(len(self.rooms)):
                     for j in range(i + 1, len(self.rooms)):

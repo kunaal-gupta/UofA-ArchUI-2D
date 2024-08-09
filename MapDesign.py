@@ -301,7 +301,7 @@ class Application(tk.Tk):
 
             except ET.ParseError as e:
                 print(f"Failed to parse XML file: {e}")
-        self.Update_TurtleOuput('TurtleOutput.txt', self.building, self.campus, self.current_floor, 'X')
+        self.Update_TurtleOuput('OutputFiles/TurtleOutput.txt', self.building, self.campus, self.current_floor, 'X')
 
     def update_records(self, building, campus, floor, room, file):
 
@@ -311,12 +311,18 @@ class Application(tk.Tk):
         turtleData = turtleConverter(building, campus, floor, room, coordinateList) + '\n'
         updatedRowsArray.append(turtleData)
 
+
     def Update_TurtleOuput(self, file_path, building, campus, floor, room):
+        directory = os.path.dirname(file_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
         try:
-            with open(file_path, 'r') as file:
-                lines = file.readlines()
-
+            if os.path.exists(file_path):
+                with open(file_path, 'r') as file:
+                    lines = file.readlines()
+            else:
+                lines = []
             filtered_lines = []
             for line in lines:
                 if not (f"Building: {building}, Campus: {campus}, Floor: {floor}, Room: {room}" in line):
@@ -327,10 +333,8 @@ class Application(tk.Tk):
             with open(file_path, 'w') as file:
                 file.writelines(filtered_lines)
 
-            print("\n" + "Records updated successfully." + "\n")
+            print(f"Name Change records updated in Turtle File\n")
 
-        except FileNotFoundError:
-            print(f"The file {file_path} does not exist.")
         except IOError as e:
             print(f"An error occurred while accessing the file: {e}")
 

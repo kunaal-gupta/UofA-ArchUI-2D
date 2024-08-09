@@ -128,6 +128,8 @@ def turtleConverter(building, campus, floor, RoomNumber, coordinateList: list):
     return row
 
 
+import os
+
 def main(floor, building, campus):
     global path
     path = Original_Building_Path + campus + '/' + building
@@ -136,20 +138,24 @@ def main(floor, building, campus):
     files = fetch_XML_file_paths(path, floorNumber)
     CoordinatesMap = {}
 
-    existing_lines = set()
-    output_file = 'TurtleOutput.txt'
+    output_file = 'OutputFiles/TurtleOutput.txt'
 
+    directory = os.path.dirname(output_file)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    existing_lines = set()
     if os.path.exists(output_file):
         with open(output_file, 'r') as file_output:
             existing_lines = set(file_output.readlines())
 
     with open(output_file, 'a') as file_output:
+        newDataCheck = False
         for file in files:
             RoomNumber, Level = parse_xml_for_roomnumber_and_floor(file)
             coordinateList = parse_xml_for_coordinates(file)
             turtleData = turtleConverter(building, campus, floor, RoomNumber, coordinateList) + '\n'
 
-            newDataCheck = False
             if turtleData not in existing_lines:
                 newDataCheck = True
                 file_output.write(turtleData)
