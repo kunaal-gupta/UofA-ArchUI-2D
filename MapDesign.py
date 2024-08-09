@@ -151,20 +151,19 @@ class Application(tk.Tk):
                                     command=lambda f=floor: self.plot_floor_map(f, building, campus))
                 button.pack(side=tk.LEFT, padx=(10, 5))
 
+        style = ttk.Style()
+        style.configure('TButton', font=("Helvetica", 12, "bold"), background='#4CAF50', foreground='white')
+
         self.canvas_frame = ttk.Frame(self.container)
         self.canvas_frame.grid(row=2, column=0, sticky="nsew")
 
-        quit_button = ttk.Button(self.container, text="Quit", command=self.quit)
-        quit_button.grid(row=3, column=0, pady=10, sticky="ew")
-
-        self.check_errors_button = ttk.Button(self.container, text="Check Room Name", command=self.correct_room_name)
-        self.check_errors_button.grid(row=1, column=1, pady=10, padx=(0, 10), sticky='ne')
+        self.check_errors_button = ttk.Button(self.container, text="Check Room Name", command=self.correct_room_name, style='TButton')
+        self.check_errors_button.grid(row=1, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
         self.check_errors_button.grid_remove()
 
-        self.add_wall_button = ttk.Button(self.container, text="Generate Neighbours Data", command=self.calling_generating_neigbours_func)
-        self.add_wall_button.grid(row=2, column=1, pady=10, padx=(1, 0), sticky='ne')
+        self.add_wall_button = ttk.Button(self.container, text="Generate Neighbours Data", command=self.calling_generating_neigbours_func, style='TButton')
+        self.add_wall_button.grid(row=2, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
         self.add_wall_button.grid_remove()
-
 
         self.selected_rooms = []
 
@@ -257,7 +256,7 @@ class Application(tk.Tk):
         original_xml_path_array = self.find_xml_file_path(self.originalXMLfolderPath, XML_Filename, room_name)
 
         for i in original_xml_path_array:
-            print()
+            print('Original File Path: ', i)
             if i is None:
                 raise FileNotFoundError(
                     f"Original XML file '{XML_Filename}' not found in '{self.originalXMLfolderPath}'.")
@@ -277,11 +276,12 @@ class Application(tk.Tk):
                 raise FileNotFoundError(f"The path '{i}' is not a file.")
 
             shutil.copy2(i, edited_xml_path)
+            print(f'Copied the XML file:  {edited_xml_path}')
 
             root = tk.Tk()
             root.withdraw()
 
-            dialog = CustomDialog(root, temp)
+            dialog = CustomDialog(root, temp, dialog_title='Changing Room Name')
             new_name = dialog.result
 
             try:
@@ -293,7 +293,7 @@ class Application(tk.Tk):
                     root.set('key', new_name)
 
                     tree.write(edited_xml_path, encoding='utf-8', xml_declaration=True)
-                    print(f"The item name and key have been updated successfully in {room_name} to {new_name}.")
+                    print(f"Name Change: The item name & key have been updated in room {room_name} to {new_name}.\n")
                 else:
                     print("The root element is not <item>.")
 
