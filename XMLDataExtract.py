@@ -1,7 +1,6 @@
 import os
 import xml.etree.ElementTree as ET
 
-# path = "Buildings Data/Buildings/"
 Original_Building_Path = "Buildings Data/Buildings/"
 Edited_Building_Path = "Buildings Data/Edited Building/"
 
@@ -98,8 +97,8 @@ def parse_xml_for_type(xml_file):
 
     if field is not None:
         try:
-            int(parse_xml_for_roomnumber_and_floor(xml_file)[0].split('-')[0])
-            return 'Room'
+            a = int(parse_xml_for_roomnumber_and_floor(xml_file))
+            return str(a)
 
         except:
             return field.text
@@ -111,13 +110,12 @@ def count_level_subfolders(base_directory, building, campus, interior_folder):
     try:
         interior_path = os.path.join(base_directory, interior_folder)
         if not os.path.isdir(interior_path):
-            # print(f"The interior folder '{interior_folder}' does not exist in '{base_directory}'.")
+            print(f"The interior folder '{interior_folder}' does not exist in '{base_directory}'.")
             return 0
 
         entries = os.listdir(interior_path)
         level_subfolders = [entry for entry in entries if
                             os.path.isdir(os.path.join(interior_path, entry)) and entry.startswith('Level ')]
-        # print(f"Filtered level subfolders: {level_subfolders}")
 
         return level_subfolders
     except Exception as e:
@@ -159,7 +157,7 @@ def main(floor, building, campus):
 
             if coordinateList is not None:
                 coordinateList.insert(0, [RoomNumber.replace('-', ''), file])
-                type_key = str(parse_xml_for_type(file).strip().split()[0])
+                type_key = str(parse_xml_for_type(file).strip())
                 if type_key not in CoordinatesMap:
                     CoordinatesMap[type_key] = []
                 CoordinatesMap[type_key].append(coordinateList)
