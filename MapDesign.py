@@ -110,6 +110,7 @@ def get_initials(text):
 class Application(tk.Tk):
     def __init__(self, building, campus, *args, **kwargs):
 
+        self.adding_wall = None
         self.canvas = None
         self.adding_door = False
         self.building = building
@@ -155,14 +156,18 @@ class Application(tk.Tk):
         style.configure('TButton', font=("Helvetica", 12, "bold"), background='#4CAF50', foreground='white')
 
         self.canvas_frame = ttk.Frame(self.container)
-        self.canvas_frame.grid(row=2, column=0, sticky="nsew")
+        self.canvas_frame.grid(row=4, column=0, sticky="nsew")
 
         self.check_errors_button = ttk.Button(self.container, text="Check Room Name", command=self.correct_room_name, style='TButton')
         self.check_errors_button.grid(row=1, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
         self.check_errors_button.grid_remove()
 
-        self.add_wall_button = ttk.Button(self.container, text="Generate Neighbours Data", command=self.calling_generating_neigbours_func, style='TButton')
-        self.add_wall_button.grid(row=2, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
+        self.generate_neighbours_button = ttk.Button(self.container, text="Generate Neighbours Data", command=self.calling_generating_neigbours_func, style='TButton')
+        self.generate_neighbours_button.grid(row=3, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
+        self.generate_neighbours_button.grid_remove()
+
+        self.add_wall_button = ttk.Button(self.container, text="Add Wall", command=self.add_wall_func, style='TButton')
+        self.add_wall_button.grid(row=4, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
         self.add_wall_button.grid_remove()
 
         self.selected_rooms = []
@@ -170,6 +175,7 @@ class Application(tk.Tk):
     def plot_floor_map(self, floor, building, campus):
         self.current_floor = floor
         self.check_errors_button.grid()
+        self.generate_neighbours_button.grid()
         self.add_wall_button.grid()
 
         for widget in self.canvas_frame.winfo_children():
@@ -178,6 +184,15 @@ class Application(tk.Tk):
         points_categories, category_names, title = self.get_floor_data(floor, building, campus)
         fig, room_colors = draw_points(points_categories, category_names, title, self.onCanvasClick,
                                        self.selected_polygons, floor)
+
+        self.polygons = []
+        for category_polygons in points_categories:
+            for points in category_polygons:
+                room_number = points[0][0]
+                polygon_points = np.array(points[1:])
+                polygon = plt.Polygon(polygon_points, closed=True, fill=True, edgecolor='black', facecolor='red',
+                                      alpha=0.5)
+                self.polygons.append((polygon, room_number))
 
         self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
         self.canvas.draw()
@@ -337,10 +352,4 @@ class Application(tk.Tk):
 
         except IOError as e:
             print(f"An error occurred while accessing the file: {e}")
-
-    def calling_generating_neigbours_func(self):
-        global RoomsDataArray
-
-        room_manager = RoomManager(RoomsDataArray, self.campus, self.building, self.current_floor)
-        room_manager.generating_neighbours()
 
