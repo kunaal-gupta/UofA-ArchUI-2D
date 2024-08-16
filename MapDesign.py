@@ -353,3 +353,63 @@ class Application(tk.Tk):
         except IOError as e:
             print(f"An error occurred while accessing the file: {e}")
 
+    def calling_generating_neigbours_func(self):
+        global RoomsDataArray
+
+        room_manager = RoomManager(RoomsDataArray, self.campus, self.building, self.current_floor)
+        room_manager.generating_neighbours()
+
+    def add_wall_func(self):
+        self.adding_wall = True
+        self.selected_rooms = []
+
+        tk.messagebox.showinfo("Add Wall", "Please select two rooms to add a wall between them.")
+        self.canvas.mpl_connect('button_press_event', self.on_select_room_for_wall)
+
+    def on_select_room_for_wall(self, event):
+        if not self.adding_wall or not hasattr(self, 'polygons'):
+            return
+
+        if event.inaxes is not None:
+            x, y = event.xdata, event.ydata
+            for polygon, room_number in self.polygons:
+                if polygon.get_path().contains_point((x, y)) and room_number != "Building Outline":
+                    if room_number not in self.selected_rooms:
+                        self.selected_rooms.append(room_number)
+                        print(f"Selected Room: {room_number}")
+
+                    if len(self.selected_rooms) == 2:
+                        self.adding_wall = False
+                        self.show_2d_diagram_of_selected_rooms()
+                    return
+
+    def show_2d_diagram_of_selected_rooms(self):
+        if len(self.selected_rooms) != 2:
+            print("Please select exactly two rooms.")
+            return
+
+        diagram_window = tk.Toplevel(self)
+        diagram_window.title("2D Diagram of Selected Rooms")
+        diagram_window.geometry("800x600")
+
+        fig, ax = plt.subplots(figsize=(8, 6))
+
+        for category_index, category_polygons in enumerate(self.polygons):
+            for polygon, room_number in category_polygons:
+                if room_number in self.selected_rooms:
+                    polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
+                                                facecolor='gray', alpha=0.5)
+                    ax.add_patch(polygon_patch)
+                    plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
+                             color='black')
+
+        ax.set_title("2D Diagram of Selected Rooms")
+        ax.set_xlabel("X Coordinate")
+        ax.set_ylabel("Y Coordinate")
+        ax.set_aspect('equal')
+        plt.grid(True)
+        plt.tight_layout()
+
+        canvas = FigureCanvasTkAgg(fig, master=diagram_window)
+        canvas.draw()
+        canvas.get_tk_widget().pack(expand=True, fill="both")
