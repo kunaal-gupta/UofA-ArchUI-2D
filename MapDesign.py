@@ -394,14 +394,13 @@ class Application(tk.Tk):
 
         fig, ax = plt.subplots(figsize=(8, 6))
 
-        for category_index, category_polygons in enumerate(self.polygons):
-            for polygon, room_number in category_polygons:
-                if room_number in self.selected_rooms:
-                    polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
-                                                facecolor='gray', alpha=0.5)
-                    ax.add_patch(polygon_patch)
-                    plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
-                             color='black')
+        for polygon, room_number in self.polygons:
+            if room_number in self.selected_rooms:
+                polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
+                                            facecolor='gray', alpha=0.5)
+                ax.add_patch(polygon_patch)
+                plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
+                         color='black')
 
         ax.set_title("2D Diagram of Selected Rooms")
         ax.set_xlabel("X Coordinate")
