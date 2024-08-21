@@ -388,6 +388,8 @@ class Application(tk.Tk):
             print("Please select exactly two rooms.")
             return
 
+        self.room_names_for_wall = self.selected_rooms
+
         diagram_window = tk.Toplevel(self)
         diagram_window.title("2D Diagram of Selected Rooms")
         diagram_window.geometry("800x600")
@@ -395,7 +397,7 @@ class Application(tk.Tk):
         fig, ax = plt.subplots(figsize=(8, 6))
 
         for polygon, room_number in self.polygons:
-            if room_number in self.selected_rooms:
+            if room_number in self.room_names_for_wall:
                 polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
                                             facecolor='gray', alpha=0.5)
                 ax.add_patch(polygon_patch)
@@ -412,3 +414,49 @@ class Application(tk.Tk):
         canvas = FigureCanvasTkAgg(fig, master=diagram_window)
         canvas.draw()
         canvas.get_tk_widget().pack(expand=True, fill="both")
+        canvas.mpl_connect('button_press_event',
+                           lambda event: self.on_select_wall_coordinates(event, ax, fig, diagram_window))
+
+    def on_select_wall_coordinates(self, event, ax, fig, diagram_window):
+        if event.inaxes is not None:
+            x, y = event.xdata, event.ydata
+            if hasattr(self, 'wall_start'):
+                ax.plot([self.wall_start[0], x], [self.wall_start[1], y], color='red', linewidth=2)
+                fig.canvas.draw()
+                self.wall_end = (x, y)
+                self.add_wall_to_original_ui(self.wall_start, self.wall_end, self.room_names_for_wall)
+                delattr(self, 'wall_start')
+            else:
+                self.wall_start = (x, y)
+
+    def add_wall_to_original_ui(self, start_coords, end_coords, room_names):
+        if self.canvas is None:
+            return
+
+        fig = self.canvas.figure
+        ax = fig.gca()
+
+        ax.plot([start_coords[0], end_coords[0]], [start_coords[1], end_coords[1]], color='red', linewidth=2)
+        self.canvas.draw()
+        print(f"Wall added between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}")
+
+    def add_wall_between_rooms(self, coord1, coord2):
+        fig, ax = plt.subplots(figsize=(10, 8))
+
+        for polygon, room_number in self.polygons:
+            if room_number in self.selected_rooms:
+                polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
+                                            facecolor='gray', alpha=0.5)
+                ax.add_patch(polygon_patch)
+                plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
+                         color='black')
+
+        ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], color='red', linewidth=2.5)
+        self.canvas.draw()
+        print(f"Added wall between coordinates: {coord1} and {coord2}")
+
+    def update_original_ui_with_wall(self, wall_info):
+        if not hasattr(self, 'canvas'):
+            return
+        self.canvas.get_tk_widget().destroy()
+        self.plot_floor_map(self.current_floor, self.building, self.campus)
