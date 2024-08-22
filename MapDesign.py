@@ -414,6 +414,7 @@ class Application(tk.Tk):
         canvas = FigureCanvasTkAgg(fig, master=diagram_window)
         canvas.draw()
         canvas.get_tk_widget().pack(expand=True, fill="both")
+
         canvas.mpl_connect('button_press_event',
                            lambda event: self.on_select_wall_coordinates(event, ax, fig, diagram_window))
 
@@ -423,8 +424,16 @@ class Application(tk.Tk):
             if hasattr(self, 'wall_start'):
                 ax.plot([self.wall_start[0], x], [self.wall_start[1], y], color='red', linewidth=2)
                 fig.canvas.draw()
+
                 self.wall_end = (x, y)
-                self.add_wall_to_original_ui(self.wall_start, self.wall_end, self.room_names_for_wall)
+                start_room = self.get_room_from_coordinates(self.wall_start)
+                end_room = self.get_room_from_coordinates(self.wall_end)
+
+                if start_room and end_room and start_room != end_room:
+                    self.add_wall_to_original_ui(self.wall_start, self.wall_end, [start_room, end_room])
+                else:
+                    print(f"Cannot add a wall between the same room or invalid coordinates.")
+
                 delattr(self, 'wall_start')
             else:
                 self.wall_start = (x, y)
@@ -435,10 +444,15 @@ class Application(tk.Tk):
 
         fig = self.canvas.figure
         ax = fig.gca()
+        start_room = self.get_room_from_coordinates(start_coords)
+        end_room = self.get_room_from_coordinates(end_coords)
 
-        ax.plot([start_coords[0], end_coords[0]], [start_coords[1], end_coords[1]], color='red', linewidth=2)
-        self.canvas.draw()
-        print(f"Wall added between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}")
+        if start_room and end_room and start_room != end_room:
+            ax.plot([start_coords[0], end_coords[0]], [start_coords[1], end_coords[1]], color='red', linewidth=2)
+            self.canvas.draw()
+            print(f"Added wall between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}")
+        else:
+            print(f"Cannot add a wall between the same room or invalid coordinates.")
 
     def add_wall_between_rooms(self, coord1, coord2):
         fig, ax = plt.subplots(figsize=(10, 8))
@@ -458,5 +472,12 @@ class Application(tk.Tk):
     def update_original_ui_with_wall(self, wall_info):
         if not hasattr(self, 'canvas'):
             return
+
         self.canvas.get_tk_widget().destroy()
         self.plot_floor_map(self.current_floor, self.building, self.campus)
+
+    def get_room_from_coordinates(self, coords):
+        for polygon, room_number in self.polygons:
+            if polygon.get_path().contains_point(coords):
+                return room_number
+        return None
