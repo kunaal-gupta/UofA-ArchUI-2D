@@ -429,10 +429,10 @@ class Application(tk.Tk):
                 start_room = self.get_room_from_coordinates(self.wall_start)
                 end_room = self.get_room_from_coordinates(self.wall_end)
 
-                if start_room and end_room and start_room != end_room:
+                if start_room and end_room and start_room != end_room and start_room in self.selected_rooms and end_room in self.selected_rooms:
                     self.add_wall_to_original_ui(self.wall_start, self.wall_end, [start_room, end_room])
                 else:
-                    print(f"Cannot add a wall between the same room or invalid coordinates.")
+                    print(f"Cannot add a wall between the same room or invalid coordinates or rooms not selected.")
 
                 delattr(self, 'wall_start')
             else:
@@ -444,15 +444,16 @@ class Application(tk.Tk):
 
         fig = self.canvas.figure
         ax = fig.gca()
+
         start_room = self.get_room_from_coordinates(start_coords)
         end_room = self.get_room_from_coordinates(end_coords)
 
-        if start_room and end_room and start_room != end_room:
+        if start_room and end_room and start_room != end_room and start_room in self.selected_rooms and end_room in self.selected_rooms:
             ax.plot([start_coords[0], end_coords[0]], [start_coords[1], end_coords[1]], color='red', linewidth=2)
             self.canvas.draw()
             print(f"Added wall between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}")
         else:
-            print(f"Cannot add a wall between the same room or invalid coordinates.")
+            print(f"Cannot add a wall between the same room or invalid coordinates or rooms not selected.")
 
     def add_wall_between_rooms(self, coord1, coord2):
         fig, ax = plt.subplots(figsize=(10, 8))
@@ -465,7 +466,7 @@ class Application(tk.Tk):
                 plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
                          color='black')
 
-        ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], color='red', linewidth=2.5)
+        ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], color='red', linewidth=3)
         self.canvas.draw()
         print(f"Added wall between coordinates: {coord1} and {coord2}")
 
