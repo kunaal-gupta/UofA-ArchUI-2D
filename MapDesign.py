@@ -37,6 +37,42 @@ def create_edited_building_subfolders(directory_path="Athabasca2DMapping/Buildin
             os.makedirs(subfolder_path)
 
 
+def show_legend_window(colors, category_names, floor):
+    legend_window = tk.Toplevel()
+    legend_window.title(f"Legend - Floor {floor}")
+
+    window_height = min(50 + len(category_names) * 30, 600)
+    legend_window.geometry(f"300x{window_height}")
+
+    content_frame = ttk.Frame(legend_window)
+    content_frame.pack(fill="both", expand=True)
+    canvas = tk.Canvas(content_frame)
+    canvas.pack(side="left", fill="both", expand=True)
+    scrollbar = ttk.Scrollbar(content_frame, orient="vertical", command=canvas.yview)
+    scrollbar.pack(side="right", fill="y")
+    canvas.configure(yscrollcommand=scrollbar.set)
+    figure_frame = ttk.Frame(canvas)
+    canvas.create_window((0, 0), window=figure_frame, anchor="nw")
+
+    fig, ax = plt.subplots(figsize=(3, len(category_names) * 0.3))
+    # ax.axis('off')
+
+    legend_handles = [plt.Line2D([0], [0], color=colors[i % len(colors)], linewidth=4.5, label=category_names[i])
+                      for i in range(len(category_names))]
+
+    ax.legend(handles=legend_handles, loc='center', frameon=False)
+
+    fig.tight_layout(pad=0)
+
+    canvas_figure = FigureCanvasTkAgg(fig, master=figure_frame)
+    canvas_figure.draw()
+    canvas_figure.get_tk_widget().pack()
+
+    figure_frame.update_idletasks()
+    canvas.configure(scrollregion=canvas.bbox("all"))
+
+    return legend_window
+
 
 def draw_points(PointArray, category_names, title, onclick_callback, selected_polygons, floor):
     global RoomsDataArray
@@ -83,12 +119,9 @@ def draw_points(PointArray, category_names, title, onclick_callback, selected_po
         selected_polygon.set_facecolor('gray')
 
     plt.title(title)
-    legend_handles = [plt.Line2D([0], [0], color=colors[i % len(colors)], linewidth=4.5, label=category_names[i]) for i
-                      in range(len(PointArray))]
-    plt.legend(handles=legend_handles, loc='best')
 
     fig.canvas.mpl_connect('button_press_event', lambda event: onclick_callback(event, polygons, category_names))
-    return fig, room_colors
+    return fig, room_colors, colors
 
 
 def get_initials(text):
@@ -121,6 +154,7 @@ class Application(tk.Tk):
         self.original_colors = {}
         self.current_floor = None
         super().__init__(*args, **kwargs)
+        self.legend_window = None
         self.title("UofA Building 2D UI")
         self.geometry("1200x900")
         self.resizable(True, True)
@@ -178,12 +212,15 @@ class Application(tk.Tk):
         self.generate_neighbours_button.grid()
         self.add_wall_button.grid()
 
+        if self.legend_window is not None and self.legend_window.winfo_exists():
+            self.legend_window.destroy()
+
         for widget in self.canvas_frame.winfo_children():
             widget.destroy()
 
         points_categories, category_names, title = self.get_floor_data(floor, building, campus)
-        fig, room_colors = draw_points(points_categories, category_names, title, self.onCanvasClick,
-                                       self.selected_polygons, floor)
+        fig, room_colors, colors = draw_points(points_categories, category_names, title, self.onCanvasClick,
+                                               self.selected_polygons, floor)
 
         self.polygons = []
         for category_polygons in points_categories:
@@ -210,6 +247,8 @@ class Application(tk.Tk):
                 plt.text(centroid[0], centroid[1], room_label, fontsize=10, ha='center', va='center',
                          color='black', fontweight='bold',
                          bbox=dict(facecolor=label_color, alpha=0.7, edgecolor=label_color, boxstyle='round,pad=0.3'))
+
+        self.legend_window = show_legend_window(colors, category_names, floor)
 
     def get_floor_data(self, floor, building, campus):
         import XMLDataExtract
@@ -390,9 +429,20 @@ class Application(tk.Tk):
 
         self.room_names_for_wall = self.selected_rooms
 
+        room1, room2 = self.selected_rooms
+
         diagram_window = tk.Toplevel(self)
-        diagram_window.title("2D Diagram of Selected Rooms")
+        diagram_window.title(f"Add door to Rooms {room1} & {room2}")
         diagram_window.geometry("800x600")
+
+        button_frame = ttk.Frame(diagram_window)
+        button_frame.pack(side=tk.TOP, fill=tk.X, pady=5)
+
+        zoom_in_button = ttk.Button(button_frame, text="Zoom In", command=lambda: self.zoom_in(ax, fig))
+        zoom_in_button.pack(side=tk.LEFT, padx=5)
+
+        zoom_out_button = ttk.Button(button_frame, text="Zoom Out", command=lambda: self.zoom_out(ax, fig))
+        zoom_out_button.pack(side=tk.LEFT, padx=5)
 
         fig, ax = plt.subplots(figsize=(8, 6))
 
@@ -404,7 +454,7 @@ class Application(tk.Tk):
                 plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
                          color='black')
 
-        ax.set_title("2D Diagram of Selected Rooms")
+        ax.set_title(f"2D Diagram of Rooms: {room1} & {room2}")
         ax.set_xlabel("X Coordinate")
         ax.set_ylabel("Y Coordinate")
         ax.set_aspect('equal')
@@ -417,6 +467,37 @@ class Application(tk.Tk):
 
         canvas.mpl_connect('button_press_event',
                            lambda event: self.on_select_wall_coordinates(event, ax, fig, diagram_window))
+
+    def zoom_out(self, ax, fig):
+        xlim = ax.get_xlim()
+        ylim = ax.get_ylim()
+
+        zoom_factor = 1.2
+
+        x_center = (xlim[1] + xlim[0]) / 2
+        y_center = (ylim[1] + ylim[0]) / 2
+        x_range = (xlim[1] - xlim[0]) * zoom_factor
+        y_range = (ylim[1] - ylim[0]) * zoom_factor
+
+        ax.set_xlim([x_center - x_range / 2, x_center + x_range / 2])
+        ax.set_ylim([y_center - y_range / 2, y_center + y_range / 2])
+
+        fig.canvas.draw()
+
+    def zoom_in(self, ax, fig):
+        xlim = ax.get_xlim()
+        ylim = ax.get_ylim()
+
+        zoom_factor = 1.2
+        x_center = (xlim[1] + xlim[0]) / 2
+        y_center = (ylim[1] + ylim[0]) / 2
+        x_range = (xlim[1] - xlim[0]) / zoom_factor
+        y_range = (ylim[1] - ylim[0]) / zoom_factor
+
+        ax.set_xlim([x_center - x_range / 2, x_center + x_range / 2])
+        ax.set_ylim([y_center - y_range / 2, y_center + y_range / 2])
+
+        fig.canvas.draw()
 
     def on_select_wall_coordinates(self, event, ax, fig, diagram_window):
         if event.inaxes is not None:
