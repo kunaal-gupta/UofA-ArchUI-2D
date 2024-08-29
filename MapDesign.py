@@ -2,6 +2,8 @@ import os
 import shutil
 import tkinter as tk
 import xml.etree.ElementTree as ET
+from lxml import etree
+
 from tkinter import ttk
 from RoomManager import RoomManager
 from XMLDataExtract import Original_Building_Path, Edited_Building_Path, count_level_subfolders, \
@@ -10,6 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from DialogueBox import CustomDialog
+import xml.etree.ElementTree as ET
 
 BuildingMap = {}
 BuildingName = Original_Building_Path.split('/')[-1]
@@ -46,28 +49,28 @@ def show_legend_window(colors, category_names, floor):
 
     content_frame = ttk.Frame(legend_window)
     content_frame.pack(fill="both", expand=True)
+
     canvas = tk.Canvas(content_frame)
     canvas.pack(side="left", fill="both", expand=True)
+
     scrollbar = ttk.Scrollbar(content_frame, orient="vertical", command=canvas.yview)
     scrollbar.pack(side="right", fill="y")
     canvas.configure(yscrollcommand=scrollbar.set)
+
     figure_frame = ttk.Frame(canvas)
     canvas.create_window((0, 0), window=figure_frame, anchor="nw")
 
     fig, ax = plt.subplots(figsize=(3, len(category_names) * 0.3))
-    # ax.axis('off')
+    ax.axis('off')
 
     legend_handles = [plt.Line2D([0], [0], color=colors[i % len(colors)], linewidth=4.5, label=category_names[i])
                       for i in range(len(category_names))]
 
     ax.legend(handles=legend_handles, loc='center', frameon=False)
-
     fig.tight_layout(pad=0)
-
     canvas_figure = FigureCanvasTkAgg(fig, master=figure_frame)
     canvas_figure.draw()
     canvas_figure.get_tk_widget().pack()
-
     figure_frame.update_idletasks()
     canvas.configure(scrollregion=canvas.bbox("all"))
 
@@ -211,7 +214,6 @@ class Application(tk.Tk):
         self.check_errors_button.grid()
         self.generate_neighbours_button.grid()
         self.add_wall_button.grid()
-
         if self.legend_window is not None and self.legend_window.winfo_exists():
             self.legend_window.destroy()
 
@@ -413,13 +415,17 @@ class Application(tk.Tk):
             x, y = event.xdata, event.ydata
             for polygon, room_number in self.polygons:
                 if polygon.get_path().contains_point((x, y)) and room_number != "Building Outline":
-                    if room_number not in self.selected_rooms:
-                        self.selected_rooms.append(room_number)
-                        print(f"Selected Room: {room_number}")
+                    room_info = (polygon, room_number)
+
+                    if room_info not in self.selected_rooms:
+                        self.selected_rooms.append(room_info)
 
                     if len(self.selected_rooms) == 2:
                         self.adding_wall = False
-                        self.show_2d_diagram_of_selected_rooms()
+                        if self.selected_rooms[0][1] != self.selected_rooms[1][1]:
+                            self.show_2d_diagram_of_selected_rooms()
+                        else:
+                            print('a Can not add a door to same rooms')
                     return
 
     def show_2d_diagram_of_selected_rooms(self):
@@ -429,15 +435,12 @@ class Application(tk.Tk):
 
         self.room_names_for_wall = self.selected_rooms
 
-        room1, room2 = self.selected_rooms
-
+        (polygon1, room1), (polygon2, room2) = self.selected_rooms
         diagram_window = tk.Toplevel(self)
         diagram_window.title(f"Add door to Rooms {room1} & {room2}")
         diagram_window.geometry("800x600")
-
         button_frame = ttk.Frame(diagram_window)
         button_frame.pack(side=tk.TOP, fill=tk.X, pady=5)
-
         zoom_in_button = ttk.Button(button_frame, text="Zoom In", command=lambda: self.zoom_in(ax, fig))
         zoom_in_button.pack(side=tk.LEFT, padx=5)
 
@@ -446,13 +449,12 @@ class Application(tk.Tk):
 
         fig, ax = plt.subplots(figsize=(8, 6))
 
-        for polygon, room_number in self.polygons:
-            if room_number in self.room_names_for_wall:
-                polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
-                                            facecolor='gray', alpha=0.5)
-                ax.add_patch(polygon_patch)
-                plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
-                         color='black')
+        for polygon, room_number in self.selected_rooms:
+            polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
+                                        facecolor='gray', alpha=0.5)
+            ax.add_patch(polygon_patch)
+            plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
+                     color='black')
 
         ax.set_title(f"2D Diagram of Rooms: {room1} & {room2}")
         ax.set_xlabel("X Coordinate")
@@ -460,20 +462,16 @@ class Application(tk.Tk):
         ax.set_aspect('equal')
         plt.grid(True)
         plt.tight_layout()
-
         canvas = FigureCanvasTkAgg(fig, master=diagram_window)
         canvas.draw()
         canvas.get_tk_widget().pack(expand=True, fill="both")
-
         canvas.mpl_connect('button_press_event',
                            lambda event: self.on_select_wall_coordinates(event, ax, fig, diagram_window))
 
     def zoom_out(self, ax, fig):
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
-
         zoom_factor = 1.2
-
         x_center = (xlim[1] + xlim[0]) / 2
         y_center = (ylim[1] + ylim[0]) / 2
         x_range = (xlim[1] - xlim[0]) * zoom_factor
@@ -481,13 +479,11 @@ class Application(tk.Tk):
 
         ax.set_xlim([x_center - x_range / 2, x_center + x_range / 2])
         ax.set_ylim([y_center - y_range / 2, y_center + y_range / 2])
-
         fig.canvas.draw()
 
     def zoom_in(self, ax, fig):
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
-
         zoom_factor = 1.2
         x_center = (xlim[1] + xlim[0]) / 2
         y_center = (ylim[1] + ylim[0]) / 2
@@ -496,28 +492,34 @@ class Application(tk.Tk):
 
         ax.set_xlim([x_center - x_range / 2, x_center + x_range / 2])
         ax.set_ylim([y_center - y_range / 2, y_center + y_range / 2])
-
         fig.canvas.draw()
 
     def on_select_wall_coordinates(self, event, ax, fig, diagram_window):
         if event.inaxes is not None:
             x, y = event.xdata, event.ydata
+
             if hasattr(self, 'wall_start'):
                 ax.plot([self.wall_start[0], x], [self.wall_start[1], y], color='red', linewidth=2)
                 fig.canvas.draw()
-
                 self.wall_end = (x, y)
                 start_room = self.get_room_from_coordinates(self.wall_start)
                 end_room = self.get_room_from_coordinates(self.wall_end)
 
-                if start_room and end_room and start_room != end_room and start_room in self.selected_rooms and end_room in self.selected_rooms:
+                if (start_room and end_room and
+                        start_room != end_room and
+                        start_room in self.selected_rooms[0][1] and end_room in self.selected_rooms[1][1]):
+
+                    ...
+                    print(bool(start_room), bool(end_room), bool(start_room in self.selected_rooms[0][1]), bool(end_room in self.selected_rooms[1][1]))
                     self.add_wall_to_original_ui(self.wall_start, self.wall_end, [start_room, end_room])
                 else:
-                    print(f"Cannot add a wall between the same room or invalid coordinates or rooms not selected.")
+                    print("b Cannot add a wall between the same room or invalid coordinates or rooms not selected.")
 
                 delattr(self, 'wall_start')
             else:
                 self.wall_start = (x, y)
+
+
 
     def add_wall_to_original_ui(self, start_coords, end_coords, room_names):
         if self.canvas is None:
@@ -529,37 +531,104 @@ class Application(tk.Tk):
         start_room = self.get_room_from_coordinates(start_coords)
         end_room = self.get_room_from_coordinates(end_coords)
 
-        if start_room and end_room and start_room != end_room and start_room in self.selected_rooms and end_room in self.selected_rooms:
+        root_folder_original = f"Buildings Data/Buildings/{self.campus}/{self.building}"
+        root_folder_edited = f"Buildings Data/Edited Building/{self.campus}/{self.building}"
+        print(room_names)
+        room0_path_original = self.find_xml_file_path(root_folder_original, file_name='xml', roomname=room_names[0])[0]
+        room1_path_original = self.find_xml_file_path(root_folder_original, file_name='xml', roomname=room_names[1])[0]
+
+        if not os.path.exists(root_folder_edited):
+            os.makedirs(root_folder_edited)
+
+        copied_room0_path = room0_path_original.replace(root_folder_original, root_folder_edited)
+        copied_room1_path = room1_path_original.replace(root_folder_original, root_folder_edited)
+        copied_room0_dir = os.path.dirname(copied_room0_path)
+        copied_room1_dir = os.path.dirname(copied_room1_path)
+
+        if not os.path.exists(copied_room0_dir):
+            os.makedirs(copied_room0_dir)
+        if not os.path.exists(copied_room1_dir):
+            os.makedirs(copied_room1_dir)
+        print('Copied XML files for door addition')
+
+        try:
+            shutil.copy2(room0_path_original, copied_room0_path)
+            shutil.copy2(room1_path_original, copied_room1_path)
+        except Exception as e:
+            print(f"Error copying XML files: {e}")
+
+        if (start_room and end_room and
+                start_room != end_room and
+                start_room in [room[1] for room in self.selected_rooms] and
+                end_room in [room[1] for room in self.selected_rooms]):
             ax.plot([start_coords[0], end_coords[0]], [start_coords[1], end_coords[1]], color='red', linewidth=2)
             self.canvas.draw()
-            print(f"Added wall between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}")
+            print(f"Added wall between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}",
+                  end='\n')
+
+            self.add_door_to_xml(copied_room0_path, room_names, start_coords, end_coords)
+            print()
+            self.add_door_to_xml(copied_room1_path, room_names, start_coords, end_coords)
+            print('Successfully updated door entry in copied XML for rooms')
+            # try:
+            #     # Attempt to add the door entry to the copied XML
+            #     self.add_door_to_xml(copied_room0_path, room_names, start_coords, end_coords)
+            #     print(f"Successfully updated door entry in copied XML for room: {room_names[0]}")
+            # except Exception as e:
+            #     print(f'Error updating copied XML file {room_names[0]} for wall addition {e}')
+            #
+            # try:
+            #     # Attempt to add the door entry to the copied XML
+            #     self.add_door_to_xml(copied_room0_path, room_names, start_coords, end_coords)
+            #
+            #     print(f"Successfully updated door entry in copied XML for room: {room_names[1]}", end='\n')
+            # except Exception as e:
+            #     print(f'Error updating copied XML file {room_names[0]} for wall addition {e}')
+
         else:
             print(f"Cannot add a wall between the same room or invalid coordinates or rooms not selected.")
 
-    def add_wall_between_rooms(self, coord1, coord2):
-        fig, ax = plt.subplots(figsize=(10, 8))
-
-        for polygon, room_number in self.polygons:
-            if room_number in self.selected_rooms:
-                polygon_patch = plt.Polygon(polygon.get_path().vertices, closed=True, edgecolor='black',
-                                            facecolor='gray', alpha=0.5)
-                ax.add_patch(polygon_patch)
-                plt.plot(polygon.get_path().vertices[:, 0], polygon.get_path().vertices[:, 1], marker='.',
-                         color='black')
-
-        ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], color='red', linewidth=3)
-        self.canvas.draw()
-        print(f"Added wall between coordinates: {coord1} and {coord2}")
-
-    def update_original_ui_with_wall(self, wall_info):
-        if not hasattr(self, 'canvas'):
-            return
-
-        self.canvas.get_tk_widget().destroy()
-        self.plot_floor_map(self.current_floor, self.building, self.campus)
-
     def get_room_from_coordinates(self, coords):
         for polygon, room_number in self.polygons:
-            if polygon.get_path().contains_point(coords):
+            if room_number != "Building Outline" and polygon.get_path().contains_point(coords):
                 return room_number
         return None
+
+    def add_door_to_xml(self, xml_path, room_names, start_coords, end_coords):
+            new_door_data = f"{room_names[0]}: {start_coords}, {room_names[1]}: {end_coords}"
+            tree = ET.parse(xml_path)
+            root = tree.getroot()
+            field_elem = None
+            for field in root.findall(".//field"):
+                if field.get("key") == "rooms_sharing_common_door":
+                    field_elem = field
+                    break
+
+            if field_elem is None:
+                field_elem = ET.SubElement(root.find("fields"), "field",
+                                           tfid="{list-of-common-doors-with-connecting-rooms}",
+                                           key="rooms_sharing_common_door", type="Text")
+                content_elem = ET.SubElement(field_elem, "content")
+                content_elem.text = new_door_data
+            else:
+                content_elem = field_elem.find("content")
+                if content_elem is not None:
+                    if content_elem.text:
+                        content_elem.text += " | " + new_door_data
+                    else:
+                        content_elem.text = new_door_data
+                else:
+                    content_elem = ET.SubElement(field_elem, "content")
+                    content_elem.text = new_door_data
+
+            tree.write(xml_path, encoding="utf-8", xml_declaration=True)
+
+
+
+
+
+
+
+
+
+
