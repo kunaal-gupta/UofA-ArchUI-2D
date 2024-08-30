@@ -24,7 +24,6 @@ def fetch_XML_file_paths(directory, floor):
                         if filepath.endswith("xml"):
                             filesArray.append(filepath)
                 return filesArray
-    print(filesArray)
     return filesArray
 
 
@@ -85,9 +84,8 @@ def parse_xml_for_roomnumber_and_floor(xml_file):
     room_number_element = root.find("./fields/field[@key='name']/content")
     if room_number_element is not None:
         room_number = room_number_element.text
-        return room_number, parse_floor_number(xml_file)
+        return room_number.replace('-', ''), parse_floor_number(xml_file)
     return None, parse_floor_number(xml_file)
-
 
 def parse_xml_for_type(xml_file):
     tree = ET.parse(xml_file)

@@ -68,6 +68,7 @@ def show_legend_window(colors, category_names, floor):
     canvas_figure = FigureCanvasTkAgg(fig, master=figure_frame)
     canvas_figure.draw()
     canvas_figure.get_tk_widget().pack()
+
     figure_frame.update_idletasks()
     canvas.configure(scrollregion=canvas.bbox("all"))
 
@@ -418,7 +419,7 @@ class Application(tk.Tk):
         room_manager.generating_neighbours()
 
     def add_door_func(self):
-        print('Note: Please dont select rooms with same name for door addition like Stairs, X etc. Otherwise Turtle function would add door info to all records with same room name. \nTo fix this please edit XML file item -> key with the new name before executing name change')
+        print('Note: Please dont select rooms with same name for door addition like Stairs, X etc. Otherwise Turtle function would add door info to all records with same room name. To fix this please edit XML file item -> key with the new name before executing name change')
         self.adding_door = True
         self.selected_rooms = []
 
@@ -455,13 +456,17 @@ class Application(tk.Tk):
         self.room_names_for_door = self.selected_rooms
 
         (polygon1, room1), (polygon2, room2) = self.selected_rooms
+
         diagram_window = tk.Toplevel(self)
         diagram_window.title(f"Add door to Rooms {room1} & {room2}")
         diagram_window.geometry("800x600")
+
         button_frame = ttk.Frame(diagram_window)
         button_frame.pack(side=tk.TOP, fill=tk.X, pady=5)
+
         zoom_in_button = ttk.Button(button_frame, text="Zoom In", command=lambda: self.zoom_in(ax, fig))
         zoom_in_button.pack(side=tk.LEFT, padx=5)
+
         zoom_out_button = ttk.Button(button_frame, text="Zoom Out", command=lambda: self.zoom_out(ax, fig))
         zoom_out_button.pack(side=tk.LEFT, padx=5)
 
@@ -484,12 +489,14 @@ class Application(tk.Tk):
         canvas = FigureCanvasTkAgg(fig, master=diagram_window)
         canvas.draw()
         canvas.get_tk_widget().pack(expand=True, fill="both")
+
         canvas.mpl_connect('button_press_event',
                            lambda event: self.on_select_door_coordinates(event, ax, fig, diagram_window))
 
     def zoom_out(self, ax, fig):
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
+
         zoom_factor = 1.2
 
         x_center = (xlim[1] + xlim[0]) / 2
@@ -588,7 +595,7 @@ class Application(tk.Tk):
 
             ax.plot([start_coords[0], end_coords[0]], [start_coords[1], end_coords[1]], color='red', linewidth=2)
             self.canvas.draw()
-            print(f"Plotted a door between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}", end='\n\n')
+            print(f"Plotted a door between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}", end='\n')
 
 
             try:
@@ -602,7 +609,7 @@ class Application(tk.Tk):
             try:
                 self.add_door_to_text_file(copied_room1_path, room_names, start_coords, end_coords)
                 self.Update_TurtleOutput_for_door_addition(self.building, room_names[1], room_names[0], start_coords, end_coords)
-                print(f"Added door info in Turtle & Txt file for room: {room_names[1]}", end='\n\n')
+                print(f"Added door info in Turtle & Txt file for room: {room_names[0]}", end='\n\n')
 
             except Exception as e:
                 print(f'Error adding door info: {room_names[0]} {e}')
@@ -620,13 +627,14 @@ class Application(tk.Tk):
 
         new_entry = f"{room_names[0]}: {start_coords}, {room_names[1]}: {end_coords}"
         file_path = file_path.replace('xml', 'door_info.text')
-        print(f'Generated a text file with door info in - {file_path}')
+        print(f'Generated a text file with door info in {file_path}')
 
         try:
             with open(file_path, 'a') as file:
                 file.write(new_entry + '\n')
         except Exception as e:
             print(f"An error occurred: {e}")
+
 
 
 
