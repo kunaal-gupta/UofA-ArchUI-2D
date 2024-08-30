@@ -1,9 +1,6 @@
 import os
 import shutil
 import tkinter as tk
-import xml.etree.ElementTree as ET
-from lxml import etree
-
 from tkinter import ttk
 from RoomManager import RoomManager
 from XMLDataExtract import Original_Building_Path, Edited_Building_Path, count_level_subfolders, \
@@ -146,7 +143,7 @@ def get_initials(text):
 class Application(tk.Tk):
     def __init__(self, building, campus, *args, **kwargs):
 
-        self.adding_wall = None
+        self.adding_door = None
         self.canvas = None
         self.adding_door = False
         self.building = building
@@ -203,9 +200,9 @@ class Application(tk.Tk):
         self.generate_neighbours_button.grid(row=3, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
         self.generate_neighbours_button.grid_remove()
 
-        self.add_wall_button = ttk.Button(self.container, text="Add Wall", command=self.add_wall_func, style='TButton')
-        self.add_wall_button.grid(row=4, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
-        self.add_wall_button.grid_remove()
+        self.add_door_button = ttk.Button(self.container, text="Add door", command=self.add_door_func, style='TButton')
+        self.add_door_button.grid(row=4, column=1, pady=(0, 0), padx=(10, 10), sticky='n')
+        self.add_door_button.grid_remove()
 
         self.selected_rooms = []
 
@@ -213,7 +210,8 @@ class Application(tk.Tk):
         self.current_floor = floor
         self.check_errors_button.grid()
         self.generate_neighbours_button.grid()
-        self.add_wall_button.grid()
+        self.add_door_button.grid()
+
         if self.legend_window is not None and self.legend_window.winfo_exists():
             self.legend_window.destroy()
 
@@ -357,7 +355,7 @@ class Application(tk.Tk):
 
             except ET.ParseError as e:
                 print(f"Failed to parse XML file: {e}")
-        self.Update_TurtleOuput('OutputFiles/TurtleOutput.txt', self.building, self.campus, self.current_floor, 'X')
+        self.Update_TurtleOuput_for_name_change('OutputFiles/TurtleOutput.txt', self.building, self.campus, self.current_floor, 'X')
 
     def update_records(self, building, campus, floor, room, file):
 
@@ -368,7 +366,7 @@ class Application(tk.Tk):
         updatedRowsArray.append(turtleData)
 
 
-    def Update_TurtleOuput(self, file_path, building, campus, floor, room):
+    def Update_TurtleOuput_for_name_change(self, file_path, building, campus, floor, room):
         directory = os.path.dirname(file_path)
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -389,10 +387,29 @@ class Application(tk.Tk):
             with open(file_path, 'w') as file:
                 file.writelines(filtered_lines)
 
-            print(f"Name Change records updated in Turtle File\n")
+            print(f"Name-change records updated in Turtle File\n")
 
         except IOError as e:
             print(f"An error occurred while accessing the file: {e}")
+
+    def Update_TurtleOutput_for_door_addition(self, building, room1, room2, door_start, door_end):
+        file_path = 'OutputFiles/TurtleOutput.txt'
+        updated_lines = []
+        door_info = f"{room1}: {door_start}, {room2}: {door_end}"
+
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+        with open(file_path, 'w') as file:
+            for line in lines:
+                if building in line and f'Room: {room1}' in line:
+                    if "door_info:" in line:
+                        line = line.strip() + " | " + door_info + "\n"
+                    else:
+                        line = line.strip() + " door_info: " + door_info + "\n"
+
+                updated_lines.append(line)
+            file.writelines(updated_lines)
 
     def calling_generating_neigbours_func(self):
         global RoomsDataArray
@@ -400,15 +417,17 @@ class Application(tk.Tk):
         room_manager = RoomManager(RoomsDataArray, self.campus, self.building, self.current_floor)
         room_manager.generating_neighbours()
 
-    def add_wall_func(self):
-        self.adding_wall = True
+    def add_door_func(self):
+        print('Note: Please dont select rooms with same name for door addition like Stairs, X etc. Otherwise Turtle function would add door info to all records with same room name. \nTo fix this please edit XML file item -> key with the new name before executing name change')
+        self.adding_door = True
         self.selected_rooms = []
 
-        tk.messagebox.showinfo("Add Wall", "Please select two rooms to add a wall between them.")
-        self.canvas.mpl_connect('button_press_event', self.on_select_room_for_wall)
+        tk.messagebox.showinfo("Add door", "Please select two rooms to add a door between them.")
+        self.canvas.mpl_connect('button_press_event', self.on_select_room_for_door)
 
-    def on_select_room_for_wall(self, event):
-        if not self.adding_wall or not hasattr(self, 'polygons'):
+
+    def on_select_room_for_door(self, event):
+        if not self.adding_door or not hasattr(self, 'polygons'):
             return
 
         if event.inaxes is not None:
@@ -421,11 +440,11 @@ class Application(tk.Tk):
                         self.selected_rooms.append(room_info)
 
                     if len(self.selected_rooms) == 2:
-                        self.adding_wall = False
+                        self.adding_door = False
                         if self.selected_rooms[0][1] != self.selected_rooms[1][1]:
                             self.show_2d_diagram_of_selected_rooms()
                         else:
-                            print('a Can not add a door to same rooms')
+                            print('Can not add a door to same rooms')
                     return
 
     def show_2d_diagram_of_selected_rooms(self):
@@ -433,7 +452,7 @@ class Application(tk.Tk):
             print("Please select exactly two rooms.")
             return
 
-        self.room_names_for_wall = self.selected_rooms
+        self.room_names_for_door = self.selected_rooms
 
         (polygon1, room1), (polygon2, room2) = self.selected_rooms
         diagram_window = tk.Toplevel(self)
@@ -443,7 +462,6 @@ class Application(tk.Tk):
         button_frame.pack(side=tk.TOP, fill=tk.X, pady=5)
         zoom_in_button = ttk.Button(button_frame, text="Zoom In", command=lambda: self.zoom_in(ax, fig))
         zoom_in_button.pack(side=tk.LEFT, padx=5)
-
         zoom_out_button = ttk.Button(button_frame, text="Zoom Out", command=lambda: self.zoom_out(ax, fig))
         zoom_out_button.pack(side=tk.LEFT, padx=5)
 
@@ -462,16 +480,18 @@ class Application(tk.Tk):
         ax.set_aspect('equal')
         plt.grid(True)
         plt.tight_layout()
+
         canvas = FigureCanvasTkAgg(fig, master=diagram_window)
         canvas.draw()
         canvas.get_tk_widget().pack(expand=True, fill="both")
         canvas.mpl_connect('button_press_event',
-                           lambda event: self.on_select_wall_coordinates(event, ax, fig, diagram_window))
+                           lambda event: self.on_select_door_coordinates(event, ax, fig, diagram_window))
 
     def zoom_out(self, ax, fig):
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
         zoom_factor = 1.2
+
         x_center = (xlim[1] + xlim[0]) / 2
         y_center = (ylim[1] + ylim[0]) / 2
         x_range = (xlim[1] - xlim[0]) * zoom_factor
@@ -479,12 +499,15 @@ class Application(tk.Tk):
 
         ax.set_xlim([x_center - x_range / 2, x_center + x_range / 2])
         ax.set_ylim([y_center - y_range / 2, y_center + y_range / 2])
+
         fig.canvas.draw()
 
     def zoom_in(self, ax, fig):
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
+
         zoom_factor = 1.2
+
         x_center = (xlim[1] + xlim[0]) / 2
         y_center = (ylim[1] + ylim[0]) / 2
         x_range = (xlim[1] - xlim[0]) / zoom_factor
@@ -492,48 +515,48 @@ class Application(tk.Tk):
 
         ax.set_xlim([x_center - x_range / 2, x_center + x_range / 2])
         ax.set_ylim([y_center - y_range / 2, y_center + y_range / 2])
+
         fig.canvas.draw()
 
-    def on_select_wall_coordinates(self, event, ax, fig, diagram_window):
+    def on_select_door_coordinates(self, event, ax, fig, diagram_window):
         if event.inaxes is not None:
             x, y = event.xdata, event.ydata
 
-            if hasattr(self, 'wall_start'):
-                ax.plot([self.wall_start[0], x], [self.wall_start[1], y], color='red', linewidth=2)
+            if hasattr(self, 'door_start'):
+                ax.plot([self.door_start[0], x], [self.door_start[1], y], color='red', linewidth=2)
                 fig.canvas.draw()
-                self.wall_end = (x, y)
-                start_room = self.get_room_from_coordinates(self.wall_start)
-                end_room = self.get_room_from_coordinates(self.wall_end)
 
-                if (start_room and end_room and
-                        start_room != end_room and
-                        start_room in self.selected_rooms[0][1] and end_room in self.selected_rooms[1][1]):
+                self.door_end = (x, y)
+
+                room0 = self.get_room_from_coordinates(self.door_start)
+                room1 = self.get_room_from_coordinates(self.door_end)
+
+                if (room0 and room1 and
+                        room0 != room1 and
+                        room0 in self.selected_rooms[0][1] and room1 in self.selected_rooms[1][1]):
 
                     ...
-                    print(bool(start_room), bool(end_room), bool(start_room in self.selected_rooms[0][1]), bool(end_room in self.selected_rooms[1][1]))
-                    self.add_wall_to_original_ui(self.wall_start, self.wall_end, [start_room, end_room])
+                    self.add_door_to_original_ui(self.door_start, self.door_end, [room0, room1])
                 else:
-                    print("b Cannot add a wall between the same room or invalid coordinates or rooms not selected.")
+                    print("Cannot add a door between the same room or invalid coordinates or rooms not selected.")
 
-                delattr(self, 'wall_start')
+                delattr(self, 'door_start')
             else:
-                self.wall_start = (x, y)
+                self.door_start = (x, y)
 
-
-
-    def add_wall_to_original_ui(self, start_coords, end_coords, room_names):
+    def add_door_to_original_ui(self, start_coords, end_coords, room_names):
         if self.canvas is None:
             return
 
         fig = self.canvas.figure
         ax = fig.gca()
 
-        start_room = self.get_room_from_coordinates(start_coords)
-        end_room = self.get_room_from_coordinates(end_coords)
+        room0_name = self.get_room_from_coordinates(start_coords)
+        room1_name = self.get_room_from_coordinates(end_coords)
 
         root_folder_original = f"Buildings Data/Buildings/{self.campus}/{self.building}"
         root_folder_edited = f"Buildings Data/Edited Building/{self.campus}/{self.building}"
-        print(room_names)
+
         room0_path_original = self.find_xml_file_path(root_folder_original, file_name='xml', roomname=room_names[0])[0]
         room1_path_original = self.find_xml_file_path(root_folder_original, file_name='xml', roomname=room_names[1])[0]
 
@@ -542,6 +565,7 @@ class Application(tk.Tk):
 
         copied_room0_path = room0_path_original.replace(root_folder_original, root_folder_edited)
         copied_room1_path = room1_path_original.replace(root_folder_original, root_folder_edited)
+
         copied_room0_dir = os.path.dirname(copied_room0_path)
         copied_room1_dir = os.path.dirname(copied_room1_path)
 
@@ -549,44 +573,42 @@ class Application(tk.Tk):
             os.makedirs(copied_room0_dir)
         if not os.path.exists(copied_room1_dir):
             os.makedirs(copied_room1_dir)
-        print('Copied XML files for door addition')
 
         try:
             shutil.copy2(room0_path_original, copied_room0_path)
             shutil.copy2(room1_path_original, copied_room1_path)
+            print('Copied XML files to Edited Building folder for door addition')
         except Exception as e:
             print(f"Error copying XML files: {e}")
 
-        if (start_room and end_room and
-                start_room != end_room and
-                start_room in [room[1] for room in self.selected_rooms] and
-                end_room in [room[1] for room in self.selected_rooms]):
+        if (room0_name and room1_name and
+                room0_name != room1_name and
+                room0_name in [room[1] for room in self.selected_rooms] and
+                room1_name in [room[1] for room in self.selected_rooms]):
+
             ax.plot([start_coords[0], end_coords[0]], [start_coords[1], end_coords[1]], color='red', linewidth=2)
             self.canvas.draw()
-            print(f"Added wall between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}",
-                  end='\n')
+            print(f"Plotted a door between rooms {room_names[0]} and {room_names[1]} from {start_coords} to {end_coords}", end='\n\n')
 
-            self.add_door_to_xml(copied_room0_path, room_names, start_coords, end_coords)
-            print()
-            self.add_door_to_xml(copied_room1_path, room_names, start_coords, end_coords)
-            print('Successfully updated door entry in copied XML for rooms')
-            # try:
-            #     # Attempt to add the door entry to the copied XML
-            #     self.add_door_to_xml(copied_room0_path, room_names, start_coords, end_coords)
-            #     print(f"Successfully updated door entry in copied XML for room: {room_names[0]}")
-            # except Exception as e:
-            #     print(f'Error updating copied XML file {room_names[0]} for wall addition {e}')
-            #
-            # try:
-            #     # Attempt to add the door entry to the copied XML
-            #     self.add_door_to_xml(copied_room0_path, room_names, start_coords, end_coords)
-            #
-            #     print(f"Successfully updated door entry in copied XML for room: {room_names[1]}", end='\n')
-            # except Exception as e:
-            #     print(f'Error updating copied XML file {room_names[0]} for wall addition {e}')
+
+            try:
+                self.add_door_to_text_file(copied_room0_path, room_names, start_coords, end_coords)
+                self.Update_TurtleOutput_for_door_addition(self.building, room_names[0], room_names[1], start_coords, end_coords)
+                print(f"Added door info in Turtle & Txt file for room: {room_names[0]}", end='\n\n')
+
+            except Exception as e:
+                print(f'Error adding door info: {room_names[0]} {e}')
+
+            try:
+                self.add_door_to_text_file(copied_room1_path, room_names, start_coords, end_coords)
+                self.Update_TurtleOutput_for_door_addition(self.building, room_names[1], room_names[0], start_coords, end_coords)
+                print(f"Added door info in Turtle & Txt file for room: {room_names[1]}", end='\n\n')
+
+            except Exception as e:
+                print(f'Error adding door info: {room_names[0]} {e}')
 
         else:
-            print(f"Cannot add a wall between the same room or invalid coordinates or rooms not selected.")
+            print(f"Cannot add a door between the same room or invalid coordinates or rooms not selected.")
 
     def get_room_from_coordinates(self, coords):
         for polygon, room_number in self.polygons:
@@ -594,34 +616,21 @@ class Application(tk.Tk):
                 return room_number
         return None
 
-    def add_door_to_xml(self, xml_path, room_names, start_coords, end_coords):
-            new_door_data = f"{room_names[0]}: {start_coords}, {room_names[1]}: {end_coords}"
-            tree = ET.parse(xml_path)
-            root = tree.getroot()
-            field_elem = None
-            for field in root.findall(".//field"):
-                if field.get("key") == "rooms_sharing_common_door":
-                    field_elem = field
-                    break
+    def add_door_to_text_file(self, file_path, room_names, start_coords, end_coords):
 
-            if field_elem is None:
-                field_elem = ET.SubElement(root.find("fields"), "field",
-                                           tfid="{list-of-common-doors-with-connecting-rooms}",
-                                           key="rooms_sharing_common_door", type="Text")
-                content_elem = ET.SubElement(field_elem, "content")
-                content_elem.text = new_door_data
-            else:
-                content_elem = field_elem.find("content")
-                if content_elem is not None:
-                    if content_elem.text:
-                        content_elem.text += " | " + new_door_data
-                    else:
-                        content_elem.text = new_door_data
-                else:
-                    content_elem = ET.SubElement(field_elem, "content")
-                    content_elem.text = new_door_data
+        new_entry = f"{room_names[0]}: {start_coords}, {room_names[1]}: {end_coords}"
+        file_path = file_path.replace('xml', 'door_info.text')
+        print(f'Generated a text file with door info in - {file_path}')
 
-            tree.write(xml_path, encoding="utf-8", xml_declaration=True)
+        try:
+            with open(file_path, 'a') as file:
+                file.write(new_entry + '\n')
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+
+
+
 
 
 
